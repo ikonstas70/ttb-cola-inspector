@@ -801,7 +801,7 @@ function getSampleGroundTruthText(sampleId) {
     } else if (sampleId === "sample-beer-compliant") {
         return `HIGH SIERRA BREWING\nCascade Ridge Double IPA\nALC. 8.2% BY VOL. | 12 FL. OZ. (355 mL)\nBrewed & Canned by High Sierra Brewing Co., Reno, NV\n${exactWarning}`;
     } else if (sampleId === "sample-tequila-missing-warning") {
-        return `DON HIDALGO\n100% De Agave Reposado Tequila\n40% ALC. VOL. (80 PROOF) | 750 mL - NOM 1414 CRT\nProduced in Arandas, Jalisco. Imported by Hacienda Imports, San Antonio, TX`;
+        return `DON HIDALGO\n100% De Agave Reposado Tequila\n40% ALC. VOL. (80 PROOF) | 750 mL - NOM 1414 CRT\nProduced in Arandas, Jalisco, Mexico. Imported by Hacienda Imports, San Antonio, TX`;
     } else if (sampleId === "sample-brand-mismatch") {
         return `OLD TOM DISTILLERY\nKentucky Straight Bourbon Whiskey\nALC. 45% BY VOL. (90 PROOF) | NET CONTENTS 750 mL\nDistilled & Bottled by Old Tom Distilling Co., Bardstown, KY\n${exactWarning}`;
     }
@@ -1282,7 +1282,7 @@ function runClientVerification() {
         } else if (selectedSample.id === "sample-beer-compliant") {
             extractedText = `HIGH SIERRA BREWING\nCascade Ridge Double IPA\nALC. 8.2% BY VOL. | 12 FL. OZ. (355 mL)\nBrewed & Canned by High Sierra Brewing Co., Reno, NV\n${exactWarning}`;
         } else if (selectedSample.id === "sample-tequila-missing-warning") {
-            extractedText = `DON HIDALGO\n100% De Agave Reposado Tequila\n40% ALC. VOL. (80 PROOF) | 750 mL - NOM 1414 CRT\nProduced in Arandas, Jalisco. Imported by Hacienda Imports, San Antonio, TX`;
+            extractedText = `DON HIDALGO\n100% De Agave Reposado Tequila\n40% ALC. VOL. (80 PROOF) | 750 mL - NOM 1414 CRT\nProduced in Arandas, Jalisco, Mexico. Imported by Hacienda Imports, San Antonio, TX`;
         }
 
         boundingBoxes = [

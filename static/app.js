@@ -1116,7 +1116,10 @@ function auditLabelSelfConsistency(ocrText, boundingBoxes = [], filename = "") {
     }
 
     // 4. Mathematical ABV vs. Proof Consistency Check
-    const abvMatch = cleanOcr.match(/(\d+(?:\.\d+)?)\s*%\s*(?:alc(?:ohol)?(?:\s*(?:by|\/|\.)\s*vol(?:ume)?)?|abv)?/i);
+    let abvMatch = cleanOcr.match(/(\d+(?:\.\d+)?)\s*%\s*(?:alc(?:ohol)?(?:\s*(?:by|\/|\.)\s*vol(?:ume)?)?|abv)/i);
+    if (!abvMatch) {
+        abvMatch = cleanOcr.match(/(\d+(?:\.\d+)?)\s*%/i);
+    }
     const proofMatch = cleanOcr.match(/(\d+(?:\.\d+)?)\s*proof/i);
     if (abvMatch && proofMatch) {
         const abvVal = parseFloat(abvMatch[1]);
@@ -1176,6 +1179,7 @@ async function handleBatchDrop(files) {
     for (let i = 0; i < files.length; i++) {
         const file = files[i];
         const fnKey = (file.name || "").toLowerCase();
+        const baseKey = fnKey.replace(/\.[^/.]+$/, "");
         updateOcrProgress("Batch OCR Queue...", `Processing file ${i + 1}/${files.length}: ${file.name}...`, Math.round(((i) / files.length) * 100));
 
         const base64 = await new Promise(resolve => {
@@ -1186,9 +1190,9 @@ async function handleBatchDrop(files) {
 
         const ocr = await runTesseractOCR(base64);
 
-        // Check if file is in user-loaded manifest
-        if (userLoadedManifestMap[fnKey]) {
-            const manifestApp = userLoadedManifestMap[fnKey];
+        // 1. If user loaded a custom manifest (CSV/JSON), cross-check against manifest application
+        const manifestApp = userLoadedManifestMap[fnKey] || userLoadedManifestMap[baseKey];
+        if (manifestApp) {
             selectedSample = null;
             const rep = runComplianceAudit(manifestApp, ocr.text, ocr.boundingBoxes || []);
             batchResults.push({
@@ -1204,29 +1208,7 @@ async function handleBatchDrop(files) {
             continue;
         }
 
-        // Check if file matches known built-in sample or registry
-        const autoApp = resolveApplicationForFile(file, ocr.text, i);
-        if (autoApp && autoApp.sample_id) {
-            selectedSample = { id: autoApp.sample_id, application: autoApp, file: file.name };
-            let labelText = ocr.text;
-            if (!labelText || labelText.trim().length < 10) {
-                labelText = getSampleGroundTruthText(autoApp.sample_id);
-            }
-            const rep = runComplianceAudit(autoApp, labelText, ocr.boundingBoxes || []);
-            batchResults.push({
-                application_id: rep.application_id,
-                brand_name: rep.brand_name,
-                beverage_type: rep.beverage_type,
-                class_type: autoApp.class_type,
-                overall_status: rep.overall_status,
-                overall_confidence: rep.overall_confidence,
-                processing_time_ms: rep.processing_time_ms,
-                notes: rep.summary_notes.join(" | ") || "Compliant"
-            });
-            continue;
-        }
-
-        // Arbitrary image with no manifest: Run Extraction & Statutory Self-Consistency Mode (NO fabricated dummy application!)
+        // 2. Default: Statutory Extraction & Self-Consistency Mode (NO fabricated dummy application!)
         selectedSample = null;
         const rep = auditLabelSelfConsistency(ocr.text, ocr.boundingBoxes || [], file.name);
         batchResults.push(rep);

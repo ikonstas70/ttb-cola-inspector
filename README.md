@@ -63,11 +63,11 @@ This platform directly resolves the core pain points identified across our Compl
 
 ## 🛠️ Technology Stack & Architectural Decisions
 
-- **Backend**: Python 3.10+ (FastAPI, Pydantic v2, Starlette)
-- **Image Processing & OCR**: Pillow (PIL), ImageEnhance, spatial coordinate extractors
+- **Client-Side Web Engine**: Modern JavaScript (ES2024), Tesseract.js v5 (WASM & Web Workers for 100% client-side zero-API-key OCR), CSS3 Design System (high-contrast, USWDS-inspired)
+- **Backend API & CLI**: Python 3.10+ (FastAPI, Pydantic v2, Uvicorn, Click)
+- **OCR & Image Preprocessing**: Tesseract.js (Browser WASM) / Pytesseract (Python), Pillow (PIL), ImageEnhance, adaptive luminance binarization
 - **Fuzzy Matching & String Algorithms**: RapidFuzz (C++ accelerated Levenshtein / Token Ratio), Unicode NFKD normalization
-- **Frontend**: Modern Vanilla JS, CSS3 Design System (high-contrast, zero external runtime bundler required for instant federal deployment)
-- **Testing & Benchmarks**: Pytest (100% automated test pass rate)
+- **Testing & Verification**: Pytest (100% automated test pass rate across API, Rules, and Warning engines)
 
 ---
 

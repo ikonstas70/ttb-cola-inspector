@@ -29,18 +29,18 @@ def validate_government_warning(extracted_text: str, bounding_box: BoundingBox =
     if not header_match:
         issues.append("MISSING HEADER: 'GOVERNMENT WARNING:' was not detected on label artwork.")
     else:
-        header_detected = header_match.group(1)
-        # Check strict uppercase
-        raw_matched_text = header_detected.strip()
-        if raw_matched_text == "GOVERNMENT WARNING:":
+        header_detected = header_match.group(1).strip()
+        is_all_upper = header_detected.isupper()
+        has_colon = header_detected.endswith(":")
+
+        if is_all_upper and has_colon:
             header_valid = True
-        elif raw_matched_text == "GOVERNMENT WARNING":
+        elif is_all_upper and not has_colon:
+            header_valid = True
             issues.append("PUNCTUATION ERROR: 'GOVERNMENT WARNING' is missing required trailing colon (:).")
-        elif raw_matched_text.isupper():
-            header_valid = True
-        else:
+        elif not is_all_upper:
             issues.append(
-                f"CASE VIOLATION (27 CFR § 16.21): Header must appear in ALL CAPITAL LETTERS. Found '{raw_matched_text}' instead of 'GOVERNMENT WARNING:'."
+                f"CASE VIOLATION (27 CFR § 16.21): Header must appear in ALL CAPITAL LETTERS. Found '{header_detected}' instead of 'GOVERNMENT WARNING:'."
             )
             
     # 2. Extract warning body text around match

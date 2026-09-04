@@ -209,13 +209,15 @@ function validateGovernmentWarning(extractedText) {
         issues.push("MISSING HEADER: 'GOVERNMENT WARNING:' was not detected on label artwork.");
     } else {
         headerDetected = headerMatch[1].trim();
-        if (headerDetected === "GOVERNMENT WARNING:") {
+        const isAllUpper = headerDetected === headerDetected.toUpperCase();
+        const hasColon = headerDetected.endsWith(":");
+
+        if (isAllUpper && hasColon) {
             headerValid = true;
-        } else if (headerDetected === "GOVERNMENT WARNING") {
+        } else if (isAllUpper && !hasColon) {
+            headerValid = true;
             issues.push("PUNCTUATION ERROR: 'GOVERNMENT WARNING' is missing required trailing colon (:).");
-        } else if (headerDetected === headerDetected.toUpperCase() && headerDetected.endsWith(":")) {
-            headerValid = true;
-        } else {
+        } else if (!isAllUpper) {
             issues.push(`CASE VIOLATION (27 CFR § 16.21): Header must appear in ALL CAPITAL LETTERS. Found '${headerDetected}' instead of 'GOVERNMENT WARNING:'.`);
         }
     }

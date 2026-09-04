@@ -84,6 +84,21 @@ This platform directly resolves the core pain points identified across our Compl
 
 ---
 
+## 🛠️ Resolved Edge Cases & Production Hardening Log (Fixed Issues)
+
+A full historical log of architectural enhancements, edge case resolutions, and statutory rule fixes is maintained in [`CHANGELOG.md`](file:///Users/convms/.gemini/antigravity/scratch/ttb-cola-inspector/CHANGELOG.md):
+
+| Issue ID | Category | Problem / Edge Case Description | Root Cause & Technical Remediation | Resolution Status |
+|---|---|---|---|---|
+| **ISSUE-01** | **Client-Side OCR** | Custom uploaded files bypassed true OCR on client side and relied on synthetic form echoing. | Integrated **Tesseract.js v5 WASM** with live Web Workers, dynamic bounding box extraction, and image preprocessing filters. | ✅ **FIXED** |
+| **ISSUE-02** | **27 CFR Part 16** | OCR character smudges on small warning text (e.g. `drive a car` $\to$ `odie a car`) caused false rejections of compliant labels. | Replaced rigid exact-substring matching with multi-token fuzzy fidelity scoring (`overallFidelity >= 0.75`). OCR smudges route to `WARNING_REVIEW` while statutory Title-Case violations (`Government Warning:`) strictly hard-reject. | ✅ **FIXED** |
+| **ISSUE-03** | **Batch Processing** | Dropping unmapped batch images generated false field mismatches against placeholder defaults (`40% ABV` / `"Bottler On File"`). | Architected dual-mode batch engine: **Manifest-Mapped Mode** (CSV/JSON upload) for expected applications + **Statutory Self-Consistency Mode** for unmapped artwork files. | ✅ **FIXED** |
+| **ISSUE-04** | **Entity Extraction** | Generic percentage claims (e.g. `"100% Blue Agave"`, `"100% Centennial Hops"`) were parsed as 100% ABV. | Implemented tiered regex parsing prioritizing explicit alcohol keywords (`% ALC`, `% VOL`, `ABV`, `PROOF`) over generic numbers. | ✅ **FIXED** |
+| **ISSUE-05** | **Customs & Origins** | Equivalent international origin names (e.g. `"Scotland"`, `"Great Britain"`, `"Jalisco"`) failed to match `"United Kingdom"` or `"Mexico"`. | Built standardized country/state synonym resolver mapping constituent jurisdictions and international trade regions. | ✅ **FIXED** |
+| **ISSUE-06** | **Accuracy Benchmark** | No automated quantitative regression benchmark to measure false-positive/negative rates across diverse beverage categories. | Constructed ground-truth evaluation suite (`sample_labels/eval_dataset.json` & `benchmark.py`) with 30 authentic COLA cases (30/30 passing in CI). | ✅ **FIXED** |
+
+---
+
 ## 📦 Quickstart & Run Instructions
 
 ### 1. Environment Setup

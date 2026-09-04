@@ -84,18 +84,22 @@ This platform directly resolves the core pain points identified across our Compl
 
 ---
 
-## 🛠️ Resolved Edge Cases & Production Hardening Log (Fixed Issues)
+## 🛠️ Resolved Bugs, Edge Cases & Production Hardening Log
 
 A full historical log of architectural enhancements, edge case resolutions, and statutory rule fixes is maintained in [`CHANGELOG.md`](file:///Users/convms/.gemini/antigravity/scratch/ttb-cola-inspector/CHANGELOG.md):
 
-| Issue ID | Category | Problem / Edge Case Description | Root Cause & Technical Remediation | Resolution Status |
-|---|---|---|---|---|
-| **ISSUE-01** | **Client-Side OCR** | Custom uploaded files bypassed true OCR on client side and relied on synthetic form echoing. | Integrated **Tesseract.js v5 WASM** with live Web Workers, dynamic bounding box extraction, and image preprocessing filters. | ✅ **FIXED** |
-| **ISSUE-02** | **27 CFR Part 16** | OCR character smudges on small warning text (e.g. `drive a car` $\to$ `odie a car`) caused false rejections of compliant labels. | Replaced rigid exact-substring matching with multi-token fuzzy fidelity scoring (`overallFidelity >= 0.75`). OCR smudges route to `WARNING_REVIEW` while statutory Title-Case violations (`Government Warning:`) strictly hard-reject. | ✅ **FIXED** |
-| **ISSUE-03** | **Batch Processing** | Dropping unmapped batch images generated false field mismatches against placeholder defaults (`40% ABV` / `"Bottler On File"`). | Architected dual-mode batch engine: **Manifest-Mapped Mode** (CSV/JSON upload) for expected applications + **Statutory Self-Consistency Mode** for unmapped artwork files. | ✅ **FIXED** |
-| **ISSUE-04** | **Entity Extraction** | Generic percentage claims (e.g. `"100% Blue Agave"`, `"100% Centennial Hops"`) were parsed as 100% ABV. | Implemented tiered regex parsing prioritizing explicit alcohol keywords (`% ALC`, `% VOL`, `ABV`, `PROOF`) over generic numbers. | ✅ **FIXED** |
-| **ISSUE-05** | **Customs & Origins** | Equivalent international origin names (e.g. `"Scotland"`, `"Great Britain"`, `"Jalisco"`) failed to match `"United Kingdom"` or `"Mexico"`. | Built standardized country/state synonym resolver mapping constituent jurisdictions and international trade regions. | ✅ **FIXED** |
-| **ISSUE-06** | **Accuracy Benchmark** | No automated quantitative regression benchmark to measure false-positive/negative rates across diverse beverage categories. | Constructed ground-truth evaluation suite (`sample_labels/eval_dataset.json` & `benchmark.py`) with 30 authentic COLA cases (30/30 passing in CI). | ✅ **FIXED** |
+| Bug ID | Category | Problem Description | Root Cause | Technical Remediation | Status |
+|---|---|---|---|---|---|
+| **BUG-01** | **Client-Side OCR** | Custom uploaded files always passed as `COMPLIANT`. | Custom image upload handler echoed form inputs back without running true OCR recognition. | Integrated **Tesseract.js v5 WebAssembly (WASM)** with live Web Workers, canvas binarization filters, and honest failure behavior on unreadable images. | ✅ **RESOLVED** |
+| **BUG-02** | **Visual Coordinates** | Bounding box overlays were static and did not reflect custom artwork. | Bounding box coordinates `[x0, y0, x1, y1]` were hardcoded to built-in sample layouts. | Dynamically parsed spatial word/line bounding boxes directly from `Tesseract.recognize()` output and mapped them to canvas visualizer. | ✅ **RESOLVED** |
+| **BUG-03** | **27 CFR Part 16** | Compliant labels false-rejected on small warning text OCR noise. | Keyword checks used rigid exact substrings (e.g. `drive a car` $\to$ `odie a car` caused false failure). | Implemented multi-token sequence similarity (`overallFidelity >= 0.75`). Character noise routes to `WARNING_REVIEW` while Title-Case evasion strictly hard-rejects. | ✅ **RESOLVED** |
+| **BUG-04** | **Diagnostic Messaging** | Misleading "CASE VIOLATION" diagnostic on missing colons/spaces. | Casing validator bundled punctuation errors and OCR spacing into a single case violation flag. | Separated case validation (`isAllUpper`) from punctuation checking (`hasColon`), emitting `PUNCTUATION ERROR` instead of `CASE VIOLATION`. | ✅ **RESOLVED** |
+| **BUG-05** | **Batch Processing** | Dropping unmapped batch images triggered false field mismatches. | Batch runner compared images against synthetic placeholder defaults (`brand_name = filename`, `40% ABV`, `"Bottler On File"`). | Architected dual-mode batch engine: **Manifest-Mapped Mode** (CSV/JSON upload) for expected applications + **Statutory Self-Consistency Mode** for unmapped files. | ✅ **RESOLVED** |
+| **BUG-06** | **ABV Extraction** | Marketing claims like `"100% Blue Agave"` were extracted as 100% ABV. | Naive regex `r"(\d+)%"` matched the first percentage found before alcohol content. | Multi-priority regex engine prioritizing explicit alcohol keywords (`% ALC`, `% VOL`, `ABV`, `PROOF`) over generic numbers. | ✅ **RESOLVED** |
+| **BUG-07** | **Customs & Origins** | `"Scotland"` or `"Jalisco"` failed matching against `"United Kingdom"` or `"Mexico"`. | Exact string matching lacked international customs jurisdiction knowledge. | Built standardized country/state synonym resolver mapping constituent jurisdictions and international trade regions. | ✅ **RESOLVED** |
+| **BUG-08** | **Backend Parity** | Python backend lacked true OCR library in `requirements.txt`. | `ocr_engine.py` only read embedded PNG metadata without pytesseract package installed. | Added `pytesseract>=0.3.10` to `requirements.txt` and unified backend recognition with `pytesseract.image_to_data()`. | ✅ **RESOLVED** |
+| **BUG-09** | **Benchmark Eval** | No quantitative evaluation measuring accuracy, precision, and false-negative rates. | Lack of formal ground-truth dataset across diverse alcoholic beverage categories. | Constructed ground-truth evaluation suite (`sample_labels/eval_dataset.json` & `benchmark.py`) with 30 authentic COLA cases (**30/30 passed** in CI). | ✅ **RESOLVED** |
+| **BUG-10** | **Batch Dropzone** | Dropping a single file into the Batch dropzone opened Studio mode instead of processing batch. | Drop event handler redirected single-file drops to `handleCustomFile`. | Dedicated distinct event listeners and `<input type="file" multiple>` pickers for Studio vs Batch portals. | ✅ **RESOLVED** |
 
 ---
 

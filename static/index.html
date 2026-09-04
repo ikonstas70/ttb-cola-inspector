@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TTB COLA Label Compliance Inspector — Alcohol Beverage Label AI</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚖️</text></svg>">
+</head>
+<body>
+
+  <!-- Official Federal Header Banner -->
+  <header class="gov-header">
+    <div class="gov-banner">
+      <span>★ United States Department of the Treasury</span>
+      <span>&bull;</span>
+      <span>Alcohol and Tobacco Tax and Trade Bureau (TTB)</span>
+    </div>
+    <div class="header-main">
+      <div class="brand-section">
+        <div class="ttb-emblem">TTB</div>
+        <div class="brand-titles">
+          <h1>COLA Label Compliance AI Inspector</h1>
+          <p>Automated Verification System &middot; 27 CFR Parts 4, 5, 7, 16</p>
+        </div>
+      </div>
+      <div class="standards-badge">
+        <span style="color:#10b981;">●</span> Sub-Second Compliance Engine (v1.0)
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Bar -->
+  <nav class="app-nav">
+    <button class="nav-tab active" data-tab="studioTab">
+      <span>🔍</span> Single Label Verification Studio
+    </button>
+    <button class="nav-tab" data-tab="batchTab">
+      <span>📦</span> High-Volume Batch Processing Queue
+    </button>
+    <button class="nav-tab" data-tab="guideTab">
+      <span>📖</span> 27 CFR Compliance Rulebook &amp; Reference
+    </button>
+  </nav>
+
+  <!-- Main Container -->
+  <main class="app-container">
+
+    <!-- TAB 1: Single Verification Studio -->
+    <section id="studioTab" class="tab-content active">
+      
+      <!-- Preset Test Case Selector Bar -->
+      <div class="sample-bar">
+        <div class="sample-bar-left">
+          <label for="sampleSelect">1-Click Test Case Presets:</label>
+          <select id="sampleSelect" class="sample-select" onchange="onSampleSelected(this.value)">
+            <option value="">Loading test cases...</option>
+          </select>
+        </div>
+        <div>
+          <button class="btn btn-secondary" onclick="document.getElementById('customFileInput').click()">
+            📁 Upload Custom Label Image
+          </button>
+          <input type="file" id="customFileInput" accept="image/*" style="display:none;" />
+        </div>
+      </div>
+
+      <!-- Studio Grid: Form on Left, Canvas in Middle/Right -->
+      <div class="studio-grid">
+        
+        <!-- Left: Application Form Input -->
+        <div class="studio-form-col">
+          <div class="card">
+            <div class="card-header">
+              <h3>📋 COLA Application Form</h3>
+              <span style="font-size:0.75rem;color:#9ca3af;">Form TTB F 5100.31</span>
+            </div>
+            <div class="card-body">
+              <form id="colaForm" onsubmit="event.preventDefault(); runVerification();">
+                <div class="form-group">
+                  <label for="appId">Application Tracking ID</label>
+                  <input type="text" id="appId" required placeholder="e.g. COLA-2026-88101" />
+                </div>
+
+                <div class="form-group">
+                  <label for="brandName">Brand Name</label>
+                  <input type="text" id="brandName" required placeholder="e.g. OLD TOM DISTILLERY" />
+                </div>
+
+                <div class="form-group">
+                  <label for="beverageType">Beverage Category</label>
+                  <select id="beverageType">
+                    <option value="Distilled Spirits">Distilled Spirits (27 CFR Part 5)</option>
+                    <option value="Wine">Wine (27 CFR Part 4)</option>
+                    <option value="Malt Beverage / Beer">Malt Beverage / Beer (27 CFR Part 7)</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="classType">Class / Type Designation</label>
+                  <input type="text" id="classType" required placeholder="e.g. Kentucky Straight Bourbon Whiskey" />
+                </div>
+
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="alcoholContent">Alcohol Content (ABV)</label>
+                    <input type="text" id="alcoholContent" required placeholder="e.g. 45% Alc./Vol. (90 Proof)" />
+                  </div>
+                  <div class="form-group">
+                    <label for="netContents">Net Contents</label>
+                    <input type="text" id="netContents" required placeholder="e.g. 750 mL" />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="bottlerAddress">Name &amp; Address of Bottler/Producer</label>
+                  <textarea id="bottlerAddress" rows="2" placeholder="e.g. Old Tom Distilling Co., Bardstown, KY"></textarea>
+                </div>
+
+                <div class="form-group">
+                  <label for="countryOrigin">Country of Origin</label>
+                  <input type="text" id="countryOrigin" value="United States" />
+                </div>
+
+                <button type="button" id="verifyBtn" class="btn btn-primary btn-block btn-lg" onclick="runVerification()">
+                  🔍 Run 27 CFR Label Compliance Verification
+                </button>
+                <p style="text-align:center;font-size:0.75rem;color:#6b7280;margin-top:8px;">
+                  Shortcut: Press <code>Ctrl + Enter</code> to verify instantly
+                </p>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Label Viewer & Live Verification Report -->
+        <div class="studio-viewer-col">
+          
+          <!-- Artwork Canvas Card -->
+          <div class="card">
+            <div class="card-header">
+              <h3>🖼️ Label Artwork Visual Inspector (Interactive Bounding Boxes)</h3>
+              <span style="font-size:0.75rem;color:#9ca3af;">Hover table rows to highlight field locations</span>
+            </div>
+            <div class="card-body" style="padding:12px;">
+              <div class="viewer-container" id="canvasContainer">
+                <div class="image-canvas-wrapper" id="canvasWrapper">
+                  <p style="color:#6b7280;">Select a test case or upload a label artwork to preview.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Live Audit Report Container -->
+          <div id="verificationResults" style="display:none;">
+            
+            <!-- Overall Status Banner -->
+            <div id="complianceBanner" class="compliance-banner"></div>
+
+            <!-- 27 CFR Part 16 Government Warning Card -->
+            <div id="gwCard" class="card"></div>
+
+            <!-- Field-by-Field Breakdown Table Card -->
+            <div class="card">
+              <div class="card-header">
+                <h3>📊 Mandatory 27 CFR Field Breakdown &amp; Discrepancy Analysis</h3>
+                <span style="font-size:0.75rem;color:#9ca3af;">Automated Cross-Check</span>
+              </div>
+              <div class="card-body" style="padding:0;overflow-x:auto;">
+                <table class="report-table">
+                  <thead>
+                    <tr>
+                      <th>Mandatory Field</th>
+                      <th>Application Value</th>
+                      <th>Extracted from Label</th>
+                      <th>Confidence</th>
+                      <th>Status</th>
+                      <th>Compliance Explanation</th>
+                    </tr>
+                  </thead>
+                  <tbody id="fieldTableBody"></tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- TAB 2: Batch Processing Portal -->
+    <section id="batchTab" class="tab-content">
+      
+      <div class="card">
+        <div class="card-header">
+          <h3>📦 High-Volume Batch Label Processing Engine</h3>
+          <span class="badge badge-pass">Bulk Importer Mode</span>
+        </div>
+        <div class="card-body">
+          <p style="color:#9ca3af;margin-bottom:16px;">
+            Process 10 to 300+ label applications in parallel. Built specifically for peak season importer filings.
+          </p>
+
+          <div class="sample-bar" style="margin-bottom:20px;">
+            <div>
+              <strong>Quick Batch Demonstration:</strong>
+              <p style="font-size:0.82rem;color:#9ca3af;">Runs full automated audit across all multi-category test labels.</p>
+            </div>
+            <button id="runBatchBtn" class="btn btn-primary btn-lg" onclick="runBatchBuiltinTest()">
+              ⚡ Run Built-In Importer Batch (6 Multi-Category Labels)
+            </button>
+          </div>
+
+          <!-- Drag and drop zone for custom bulk batches -->
+          <div class="dropzone" id="customUploadDropzone">
+            <div class="dropzone-icon">📥</div>
+            <h4>Drop Custom Label Images Here for Bulk Verification</h4>
+            <p style="font-size:0.85rem;color:#9ca3af;margin-top:4px;">Supports multiple PNG, JPG, and WebP artwork files simultaneously</p>
+          </div>
+
+          <!-- Batch Metrics KPIs -->
+          <div class="batch-kpi-grid" id="batchKpis" style="display:none;">
+            <div class="kpi-card">
+              <div class="kpi-title">Total Applications</div>
+              <div class="kpi-value" id="kpiTotal" style="color:#60a5fa;">0</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-title">Compliant (Approved)</div>
+              <div class="kpi-value" id="kpiCompliant" style="color:#34d399;">0</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-title">Flagged for Review</div>
+              <div class="kpi-value" id="kpiWarning" style="color:#f59e0b;">0</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-title">Rejected (Mismatches)</div>
+              <div class="kpi-value" id="kpiRejected" style="color:#ef4444;">0</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-title">Avg Processing Time</div>
+              <div class="kpi-value" id="kpiAvgTime" style="color:#38bdf8;">0 ms</div>
+            </div>
+          </div>
+
+          <!-- Batch Summary Table -->
+          <div id="batchResultsTableContainer" style="display:none;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+              <h4>Batch Audit Summary Table</h4>
+              <button class="btn btn-success" onclick="exportBatchCSV()">
+                📥 Export Standard Federal Compliance CSV Report
+              </button>
+            </div>
+            <div style="overflow-x:auto;">
+              <table class="report-table">
+                <thead>
+                  <tr>
+                    <th>Application ID</th>
+                    <th>Brand Name</th>
+                    <th>Category</th>
+                    <th>Status</th>
+                    <th>Confidence</th>
+                    <th>Processing Time</th>
+                    <th>Compliance Issues &amp; Notes</th>
+                  </tr>
+                </thead>
+                <tbody id="batchTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </section>
+
+    <!-- TAB 3: 27 CFR Guidelines & Reference -->
+    <section id="guideTab" class="tab-content">
+      
+      <div class="ref-section">
+        <h3>⚖️ 27 CFR Part 16 — Government Health Warning Statement Requirements</h3>
+        <p>The health warning statement is mandatory on <strong>all alcoholic beverages</strong> sold or distributed in the United States containing not less than 0.5% alcohol by volume.</p>
+        
+        <div class="extracted-quote-box" style="margin:14px 0;font-size:0.95rem;">
+<strong>GOVERNMENT WARNING:</strong> (1) According to the Surgeon General, women should not drink alcoholic beverages during pregnancy because of the risk of birth defects. (2) Consumption of alcoholic beverages impairs your ability to drive a car or operate machinery, and may cause health problems.
+        </div>
+
+        <h4>Key Compliance Rules:</h4>
+        <ul>
+          <li><strong>Mandatory All-Caps Header:</strong> The words <code>GOVERNMENT WARNING:</code> must appear in all capital letters and bold print.</li>
+          <li><strong>Exact Verbatim Text:</strong> No omissions, abbreviations, or wording modifications are permitted under federal law.</li>
+          <li><strong>Conspicuous Placement:</strong> Must appear on a contrasting background, clearly separated from other label copy.</li>
+        </ul>
+      </div>
+
+      <div class="ref-section">
+        <h3>🍷 Beverage Category Standards of Identity</h3>
+        <ul>
+          <li><strong>Distilled Spirits (27 CFR Part 5):</strong> Brand Name, Class/Type Designation, ABV &amp; Proof (Proof must mathematically equal $2 \times \text{ABV}$), Net Contents (Standard metric sizes: 50 mL, 100 mL, 200 mL, 375 mL, 750 mL, 1 L, 1.75 L), Bottler Name/Address, Country of Origin (if imported).</li>
+          <li><strong>Wine (27 CFR Part 4):</strong> Brand Name, Class/Type (e.g. Cabernet Sauvignon), Appellation of Origin (if required), ABV (mandatory if over 14% ABV; "Table Wine" permitted for 7–14%), Net Contents, Bottler declaration.</li>
+          <li><strong>Malt Beverages / Beer (27 CFR Part 7):</strong> Brand Name, Class/Type (e.g. India Pale Ale, Stout), Net Contents, Name and Address of Brewer/Packer, Alcohol Content (where required by state law).</li>
+        </ul>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Official Footer -->
+  <footer class="gov-footer">
+    <p>United States Alcohol and Tobacco Tax and Trade Bureau (TTB) &middot; Label Compliance &amp; Verification Prototype</p>
+    <p style="margin-top:4px;color:#4b5563;">Built for TTB Compliance Agents &middot; Sub-Second Verification Engine &middot; FedRAMP-aligned Architecture</p>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

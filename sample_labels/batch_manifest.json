@@ -1,0 +1,110 @@
+[
+  {
+    "id": "sample-bourbon-compliant",
+    "name": "Old Tom Straight Bourbon (100% Compliant)",
+    "file": "bourbon_compliant.png",
+    "expected_result": "COMPLIANT",
+    "application": {
+      "application_id": "COLA-2026-88101",
+      "brand_name": "OLD TOM DISTILLERY",
+      "fanciful_name": null,
+      "beverage_type": "Distilled Spirits",
+      "class_type": "Kentucky Straight Bourbon Whiskey",
+      "alcohol_content": "45% Alc./Vol. (90 Proof)",
+      "net_contents": "750 mL",
+      "bottler_name_address": "Old Tom Distilling Co., Bardstown, KY",
+      "country_of_origin": "United States",
+      "notes": null
+    }
+  },
+  {
+    "id": "sample-bourbon-bad-warning",
+    "name": "Old Tom Bourbon (Title Case Warning Violation - Rejected)",
+    "file": "bourbon_bad_warning.png",
+    "expected_result": "REJECTED_MISMATCH",
+    "application": {
+      "application_id": "COLA-2026-88102",
+      "brand_name": "OLD TOM DISTILLERY",
+      "fanciful_name": null,
+      "beverage_type": "Distilled Spirits",
+      "class_type": "Kentucky Straight Bourbon Whiskey",
+      "alcohol_content": "45% Alc./Vol. (90 Proof)",
+      "net_contents": "750 mL",
+      "bottler_name_address": "Old Tom Distilling Co., Bardstown, KY",
+      "country_of_origin": "United States",
+      "notes": null
+    }
+  },
+  {
+    "id": "sample-wine-compliant",
+    "name": "Oak Ridge Reserve Cabernet (Compliant Wine)",
+    "file": "napa_cabernet_compliant.png",
+    "expected_result": "COMPLIANT",
+    "application": {
+      "application_id": "COLA-2026-44910",
+      "brand_name": "OAK RIDGE ESTATE",
+      "fanciful_name": null,
+      "beverage_type": "Wine",
+      "class_type": "Cabernet Sauvignon",
+      "alcohol_content": "14.2% ABV",
+      "net_contents": "750 mL",
+      "bottler_name_address": "Oak Ridge Winery, St. Helena, CA",
+      "country_of_origin": "United States",
+      "notes": null
+    }
+  },
+  {
+    "id": "sample-wine-abv-mismatch",
+    "name": "Oak Ridge Cabernet (14.5% on Label vs 13.5% on App - Mismatch)",
+    "file": "napa_cabernet_abv_mismatch.png",
+    "expected_result": "REJECTED_MISMATCH",
+    "application": {
+      "application_id": "COLA-2026-44911",
+      "brand_name": "OAK RIDGE ESTATE",
+      "fanciful_name": null,
+      "beverage_type": "Wine",
+      "class_type": "Cabernet Sauvignon",
+      "alcohol_content": "13.5% ABV",
+      "net_contents": "750 mL",
+      "bottler_name_address": "Oak Ridge Winery, St. Helena, CA",
+      "country_of_origin": "United States",
+      "notes": null
+    }
+  },
+  {
+    "id": "sample-beer-compliant",
+    "name": "High Sierra Double IPA (Compliant Malt Beverage)",
+    "file": "craft_ipa_beer_compliant.png",
+    "expected_result": "COMPLIANT",
+    "application": {
+      "application_id": "COLA-2026-19302",
+      "brand_name": "HIGH SIERRA BREWING",
+      "fanciful_name": null,
+      "beverage_type": "Malt Beverage / Beer",
+      "class_type": "India Pale Ale (Double IPA)",
+      "alcohol_content": "8.2% ABV",
+      "net_contents": "12 FL. OZ.",
+      "bottler_name_address": "High Sierra Brewing Co., Reno, NV",
+      "country_of_origin": "United States",
+      "notes": null
+    }
+  },
+  {
+    "id": "sample-tequila-missing-warning",
+    "name": "Don Hidalgo Tequila (Missing Warning - Rejected)",
+    "file": "tequila_missing_warning.png",
+    "expected_result": "REJECTED_MISMATCH",
+    "application": {
+      "application_id": "COLA-2026-62001",
+      "brand_name": "DON HIDALGO",
+      "fanciful_name": null,
+      "beverage_type": "Distilled Spirits",
+      "class_type": "Reposado Tequila",
+      "alcohol_content": "40% Alc./Vol. (80 Proof)",
+      "net_contents": "750 mL",
+      "bottler_name_address": "Hacienda Imports, San Antonio, TX",
+      "country_of_origin": "Mexico",
+      "notes": null
+    }
+  }
+]

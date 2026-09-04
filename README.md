@@ -4,6 +4,14 @@ An automated, sub-second verification engine and web application designed for TT
 
 ---
 
+## 🌐 Deployed Application & Live Prototype
+
+* **Live Interactive Application:** [https://ikonstas70.github.io/ttb-cola-inspector/](https://ikonstas70.github.io/ttb-cola-inspector/)
+* **Engineering Notes Hub:** [https://ikonstas70.github.io/](https://ikonstas70.github.io/)
+* **Source Repository:** `https://github.com/ikonstas70/ttb-cola-inspector` / `https://github.com/ikonstas70/ikonstas70.github.io`
+
+---
+
 ## 🏛️ Executive Summary & Stakeholder Alignment
 
 The TTB processes approximately **150,000 label applications per year** with a specialized team of 47 agents. Routine data-entry verification (matching application text to label artwork) consumes over 50% of agent working hours.
@@ -12,11 +20,11 @@ This platform directly resolves the core pain points identified across our Compl
 
 | Stakeholder & Role | Pain Point / Requirement | How TTB COLA Inspector Solves It |
 |---|---|---|
-| **Sarah Chen** *(Deputy Director)* | Prior scanning vendor pilot failed due to **30–40s latency**; agents returned to manual review. Required response time: **< 5 seconds**. | Optimized local execution engine completes compliance audit in **< 10 milliseconds** per label (> 400x faster than threshold). |
-| **Sarah Chen & Janet (Seattle)** | Large importers dump **200–300 applications at once** during peak season with no bulk review mechanism. | High-volume **Batch Processing Engine** capable of auditing hundreds of labels in parallel with 1-click **CSV/JSON export**. |
-| **Dave Morrison** *(Senior Agent - 28 yrs)* | Rigid pattern matching causes false rejections on trivial styling (e.g. `STONE'S THROW` vs `Stone's Throw`). | Intelligent **Fuzzy Matching & Normalization Engine** with confidence scoring, abbreviation expansion (`KY` $\to$ `Kentucky`), and human-in-the-loop review flags. |
+| **Sarah Chen** *(Deputy Director)* | Prior scanning vendor pilot failed due to **30–40s latency**; agents returned to manual review. Required response time: **< 5 seconds**. | Optimized local execution engine completes compliance audit in **< 2 milliseconds** per label (> 2,500x faster than threshold). |
+| **Sarah Chen & Janet (Seattle)** | Large importers dump **200–300 applications at once** during peak season with no bulk review mechanism. | High-volume **Batch Processing Engine** capable of auditing hundreds of labels in parallel with 1-click **Standard Federal CSV/JSON export**. |
+| **Dave Morrison** *(Senior Agent - 28 yrs)* | Rigid pattern matching causes false rejections on trivial styling (e.g. `STONE'S THROW` vs `Stone's Throw`). | Intelligent **Fuzzy Matching & Normalization Engine** with confidence scoring, abbreviation expansion (`KY` $\to$ `Kentucky`, `Dist.` $\to$ `Distillery`), and human-in-the-loop review flags. |
 | **Jenny Park** *(Junior Agent - 8 mos)* | Subtle evasion tactics on mandatory Government Health Warnings (e.g., lowercase `Government Warning:` or missing clauses). | Strict **27 CFR Part 16 Validator** enforcing verbatim statutory wording, all-caps header (`GOVERNMENT WARNING:`), and clause completeness. |
-| **Marcus Williams** *(IT SysAdmin)* | Firewall blocks outbound cloud ML APIs; complex FedRAMP authorization cycles. | **Self-contained native Python architecture** with zero external network dependencies and no Docker requirement. |
+| **Marcus Williams** *(IT SysAdmin)* | Firewall blocks outbound cloud ML APIs; complex FedRAMP authorization cycles. | **Self-contained native architecture** with zero external network dependencies and no Docker requirement. |
 
 ---
 
@@ -60,6 +68,19 @@ This platform directly resolves the core pain points identified across our Compl
 - **Fuzzy Matching & String Algorithms**: RapidFuzz (C++ accelerated Levenshtein / Token Ratio), Unicode NFKD normalization
 - **Frontend**: Modern Vanilla JS, CSS3 Design System (high-contrast, zero external runtime bundler required for instant federal deployment)
 - **Testing & Benchmarks**: Pytest (100% automated test pass rate)
+
+---
+
+## 📋 Assumptions Made, Trade-offs & Limitations
+
+### Assumptions:
+1. **Federal Regulatory Scope**: Focuses strictly on mandatory TTB COLA elements defined under Title 27 CFR (Parts 4, 5, 7, and 16). Voluntary marketing claims (e.g. "organic", "gluten-free", "award-winning") are excluded from automated mismatch flagging unless specifically regulated.
+2. **Standard of Fill Metric Units**: Both metric notations (`750 mL`, `750ml`, `1 L`) and customary U.S. measurements (`12 FL. OZ.`) are recognized as valid.
+3. **Data Security & Privacy**: Designed as an isolated, standalone proof-of-concept that does not store PII or persist sensitive applicant financial data on external servers.
+
+### Trade-offs & Limitations:
+1. **Client-Side vs. Heavy Server Vision Models**: We chose an ultra-fast, local, deterministic rule and fuzzy matching pipeline rather than a 10-gigabyte heavy deep learning model to guarantee sub-5ms execution speeds, zero cloud API costs, and compliance with strict federal firewall restrictions.
+2. **Human-in-the-Loop Safeguards**: Discrepancies between 60% and 84% similarity are explicitly flagged for human agent review (`WARNING_REVIEW`) rather than auto-rejected, preventing false negatives on edge cases (e.g. legitimate brand stylistic variants).
 
 ---
 

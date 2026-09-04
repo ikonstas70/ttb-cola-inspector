@@ -150,28 +150,28 @@ pytest
 
 ## 📊 Ground-Truth Regulatory Benchmark (30 Public COLA Labels)
 
-To rigorously evaluate real-world performance, we constructed a ground-truth dataset (`sample_labels/eval_dataset.json`) of **30 authentic public COLA registry label applications** spanning Distilled Spirits (Bourbon, Tequila, Vodka, Gin), Wine (Cabernet, Chardonnay, Pinot Noir), and Malt Beverages (IPA, Stout, Pale Ale).
+To evaluate real-world performance across diverse beverage types, we constructed a ground-truth dataset (`sample_labels/eval_dataset.json`) of **30 authentic public COLA registry label applications** spanning Distilled Spirits (Bourbon, Tequila, Vodka, Gin), Wine (Cabernet, Chardonnay, Pinot Noir), and Malt Beverages (IPA, Stout, Pale Ale).
 
 Run the automated evaluation suite:
 ```bash
 python benchmark.py
 ```
 
-### Benchmark Results Summary
+### Benchmark Results Summary (30/30 on Curated Set)
 
 | Metric | Measured Value | Standard Federal Baseline |
 |---|---|---|
-| **Evaluated COLA Cases** | **30 Records** (Wine, Spirits, Beer) | — |
-| **Overall Classification Accuracy** | **100.0%** | > 95.0% |
+| **Evaluated COLA Cases** | **30 Records (30/30)** (Wine, Spirits, Beer) | — |
+| **Benchmark Classification Accuracy** | **30/30 Passed (100.0%)** | > 95.0% |
 | **False Negative Rate (FNR)** | **0.0%** (0 compliant labels rejected) | < 2.0% |
-| **False Positive Rate (FPR)** | **0.0%** (0 illegal labels approved) | 0.0% |
+| **False Positive Rate (FPR)** | **0.0%** (0 non-compliant labels approved) | 0.0% |
 | **Safety-Critical Precision** | **100.0%** | > 98.0% |
 | **Compliance Recall** | **100.0%** | > 98.0% |
 | **Mean Execution Latency** | **0.14 ms** per label | < 5,000 ms (Sarah Chen threshold) |
 | **p95 Execution Latency** | **0.19 ms** per label | < 5,000 ms |
 
 > [!NOTE]
-> All 30 ground-truth test cases run via both `benchmark.py` and `tests/test_benchmark.py` during automated CI testing.
+> **Methodology & Limitations**: All 30 ground-truth test cases run via both `benchmark.py` and `tests/test_benchmark.py` during CI testing. The benchmark evaluates 27 CFR statutory compliance against high-resolution public registry label designs and statutory failure edge cases (Part 16 casing evasion, missing clauses, ABV/proof mathematical discrepancies, brand variance). It does not yet evaluate extreme physical 3D bottle warping, severe flash glare, or non-standard handwritten labels.
 
 ---
 

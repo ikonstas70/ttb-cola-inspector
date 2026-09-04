@@ -321,7 +321,7 @@
             Process 10 to 300+ label applications in parallel. Built specifically for peak season importer filings.
           </p>
 
-          <div class="sample-bar" style="margin-bottom:20px;">
+          <div class="sample-bar" style="margin-bottom:16px;">
             <div>
               <strong>Quick Batch Demonstration:</strong>
               <p style="font-size:0.82rem;color:#9ca3af;">Runs full automated audit across all multi-category test labels in milliseconds.</p>
@@ -329,6 +329,23 @@
             <button id="runBatchBtn" class="btn btn-primary btn-lg" onclick="runBatchBuiltinTest()">
               ⚡ Run Built-In Importer Batch (6 Multi-Category Labels)
             </button>
+          </div>
+
+          <!-- Application Manifest Control Bar -->
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:10px;background:rgba(30,41,59,0.7);padding:12px 16px;border-radius:8px;border:1px solid #334155;">
+            <div>
+              <span style="font-size:0.85rem;font-weight:700;color:#e2e8f0;">📑 Application Manifest Mapping:</span>
+              <span id="manifestStatusBadge" class="standards-badge" style="margin-left:8px;font-size:0.75rem;background:#065f46;border-color:#10b981;color:#a7f3d0;">● Auto-Resolve &amp; Self-Consistency Mode</span>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center;">
+              <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('manifestFileInput').click()">
+                📂 Load Custom Manifest (CSV/JSON)
+              </button>
+              <input type="file" id="manifestFileInput" accept=".csv,.json" style="display:none;" onchange="handleManifestUpload(this.files[0])" />
+              <button type="button" class="btn btn-secondary btn-sm" onclick="downloadSampleManifestTemplate()">
+                📥 Download Sample Manifest (CSV)
+              </button>
+            </div>
           </div>
 
           <!-- Drag and drop zone for custom bulk batches -->
@@ -463,8 +480,8 @@
       </div>
 
       <div class="ref-section" style="border-top:1px solid #334155;padding-top:16px;margin-top:20px;">
-        <h3>📊 Ground-Truth Regulatory Benchmark (30 Public COLA Labels)</h3>
-        <p>Evaluated against 30 ground-truth public COLA registry label applications spanning Distilled Spirits, Wine, and Malt Beverages (<code>benchmark.py</code> &amp; <code>eval_dataset.json</code>):</p>
+        <h3>📊 Curated Regulatory Benchmark (30/30 on Public COLA Test Suite)</h3>
+        <p>Evaluated on our benchmark dataset of 30 public COLA registry label applications spanning Distilled Spirits, Wine, and Malt Beverages (<code>benchmark.py</code> &amp; <code>eval_dataset.json</code>):</p>
         <div style="overflow-x:auto;margin-top:12px;">
           <table class="report-table">
             <thead>
@@ -477,8 +494,8 @@
             </thead>
             <tbody>
               <tr>
-                <td><strong>Classification Accuracy</strong></td>
-                <td><span class="badge badge-pass">100.0%</span></td>
+                <td><strong>Benchmark Accuracy</strong></td>
+                <td><span class="badge badge-pass">30 / 30 Passed (100.0%)</span></td>
                 <td>&gt; 95.0%</td>
                 <td><span style="color:#34d399;font-weight:700;">PASSED</span></td>
               </tr>
@@ -490,7 +507,7 @@
               </tr>
               <tr>
                 <td><strong>False Positive Rate (FPR)</strong></td>
-                <td><span class="badge badge-pass">0.0% (0 illegal labels approved)</span></td>
+                <td><span class="badge badge-pass">0.0% (0 non-compliant labels approved)</span></td>
                 <td>0.0%</td>
                 <td><span style="color:#34d399;font-weight:700;">PASSED</span></td>
               </tr>
@@ -509,6 +526,9 @@
             </tbody>
           </table>
         </div>
+        <p style="font-size:0.8rem;color:#94a3b8;margin-top:10px;">
+          <em>Methodology &amp; Scope:</em> Verified via automated CI suite (<code>pytest tests/test_benchmark.py</code>). Evaluates 27 CFR statutory compliance against high-resolution public registry label designs and key failure modes (Part 16 casing evasion, omitted clauses, ABV/proof discrepancy, brand divergence). Does not yet model physical 3D bottle cylinder warping or severe lighting glare.
+        </p>
       </div>
 
     </section>

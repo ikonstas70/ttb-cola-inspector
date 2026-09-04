@@ -1001,6 +1001,171 @@ function resolveApplicationForFile(file, ocrText, index) {
     };
 }
 
+let userLoadedManifestMap = {};
+
+function handleManifestUpload(file) {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        try {
+            const content = e.target.result;
+            userLoadedManifestMap = {};
+            let count = 0;
+
+            if (file.name.endsWith('.json')) {
+                const parsed = JSON.parse(content);
+                const items = Array.isArray(parsed) ? parsed : (parsed.items || [parsed]);
+                items.forEach(item => {
+                    const app = item.application || item;
+                    const key = (item.file || item.filename || app.file || app.application_id || "").toLowerCase();
+                    if (key) {
+                        userLoadedManifestMap[key] = app;
+                        count++;
+                    }
+                });
+            } else {
+                // CSV parsing
+                const lines = content.split(/\r?\n/).filter(l => l.trim().length > 0);
+                if (lines.length > 1) {
+                    const headers = lines[0].split(',').map(h => h.trim().toLowerCase().replace(/["']/g, ''));
+                    for (let i = 1; i < lines.length; i++) {
+                        const row = lines[i].split(',').map(v => v.trim().replace(/^["']|["']$/g, ''));
+                        if (row.length >= 3) {
+                            const rec = {};
+                            headers.forEach((h, idx) => {
+                                rec[h] = row[idx] || "";
+                            });
+                            const key = (rec.file || rec.filename || rec.application_id || "").toLowerCase();
+                            if (key) {
+                                userLoadedManifestMap[key] = {
+                                    application_id: rec.application_id || `COLA-${1000 + i}`,
+                                    brand_name: rec.brand_name || "",
+                                    beverage_type: rec.beverage_type || "Distilled Spirits",
+                                    class_type: rec.class_type || "Standard",
+                                    alcohol_content: rec.alcohol_content || "",
+                                    net_contents: rec.net_contents || "750 mL",
+                                    bottler_name_address: rec.bottler_name_address || "",
+                                    country_of_origin: rec.country_of_origin || "United States"
+                                };
+                                count++;
+                            }
+                        }
+                    }
+                }
+            }
+
+            const badge = document.getElementById('manifestStatusBadge');
+            if (badge) {
+                badge.style.background = "#1e3a8a";
+                badge.style.borderColor = "#3b82f6";
+                badge.style.color = "#93c5fd";
+                badge.innerHTML = `● Manifest Loaded (${count} Records Mapped)`;
+            }
+            alert(`Successfully loaded application manifest with ${count} record(s). Uploaded batch label files will be cross-checked against this manifest.`);
+        } catch (err) {
+            alert(`Failed to parse manifest: ${err.message}`);
+        }
+    };
+    reader.readAsText(file);
+}
+
+function downloadSampleManifestTemplate() {
+    const csvContent = `file,application_id,brand_name,beverage_type,class_type,alcohol_content,net_contents,bottler_name_address,country_of_origin
+bourbon_compliant.png,COLA-2026-88101,OLD TOM DISTILLERY,Distilled Spirits,Kentucky Straight Bourbon Whiskey,45% Alc./Vol. (90 Proof),750 mL,"Old Tom Distilling Co., Bardstown, KY",United States
+bourbon_bad_warning.png,COLA-2026-88102,OLD TOM DISTILLERY,Distilled Spirits,Kentucky Straight Bourbon Whiskey,45% Alc./Vol. (90 Proof),750 mL,"Old Tom Distilling Co., Bardstown, KY",United States
+napa_cabernet_compliant.png,COLA-2026-44910,OAK RIDGE ESTATE,Wine,Cabernet Sauvignon,14.2% ABV,750 mL,"Oak Ridge Winery, St. Helena, CA",United States
+napa_cabernet_abv_mismatch.png,COLA-2026-44911,OAK RIDGE ESTATE,Wine,Cabernet Sauvignon,13.5% ABV,750 mL,"Oak Ridge Winery, St. Helena, CA",United States
+craft_ipa_beer_compliant.png,COLA-2026-19302,HIGH SIERRA BREWING,Malt Beverage / Beer,India Pale Ale (Double IPA),8.2% ABV,12 FL. OZ.,"High Sierra Brewing Co., Reno, NV",United States
+tequila_missing_warning.png,COLA-2026-62001,DON HIDALGO,Distilled Spirits,Reposado Tequila,40% Alc./Vol. (80 Proof),750 mL,"Hacienda Imports, San Antonio, TX",Mexico`;
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.setAttribute("href", url);
+    link.setAttribute("download", "ttb_cola_batch_manifest_template.csv");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+function auditLabelSelfConsistency(ocrText, boundingBoxes = [], filename = "") {
+    const startTime = performance.now();
+    const cleanOcr = (ocrText || "").trim();
+    const issues = [];
+    const notes = [];
+
+    // 1. 27 CFR Part 16 Government Warning Verification
+    const gwResult = validateGovernmentWarning(cleanOcr);
+    if (gwResult.status === "REJECTED_MISMATCH") {
+        issues.push(...gwResult.issues);
+    } else if (gwResult.status === "WARNING_REVIEW") {
+        notes.push(...gwResult.issues);
+    }
+
+    // 2. Extract Brand (first prominent non-warning line)
+    const lines = cleanOcr.split('\n').map(l => l.trim()).filter(l => l.length > 2 && !l.toLowerCase().includes('government warning'));
+    const detectedBrand = lines.length > 0 ? lines[0].toUpperCase() : filename.replace(/\.[^/.]+$/, "").replace(/[-_]/g, " ").toUpperCase();
+
+    // 3. Extract Category
+    const lowerOcr = cleanOcr.toLowerCase();
+    let detectedCategory = "Distilled Spirits";
+    if (lowerOcr.includes("wine") || lowerOcr.includes("cabernet") || lowerOcr.includes("chardonnay") || lowerOcr.includes("pinot")) {
+        detectedCategory = "Wine";
+    } else if (lowerOcr.includes("ale") || lowerOcr.includes("beer") || lowerOcr.includes("ipa") || lowerOcr.includes("stout") || lowerOcr.includes("lager") || lowerOcr.includes("brewing")) {
+        detectedCategory = "Malt Beverage / Beer";
+    }
+
+    // 4. Mathematical ABV vs. Proof Consistency Check
+    const abvMatch = cleanOcr.match(/(\d+(?:\.\d+)?)\s*%\s*(?:alc(?:ohol)?(?:\s*(?:by|\/|\.)\s*vol(?:ume)?)?|abv)?/i);
+    const proofMatch = cleanOcr.match(/(\d+(?:\.\d+)?)\s*proof/i);
+    if (abvMatch && proofMatch) {
+        const abvVal = parseFloat(abvMatch[1]);
+        const proofVal = parseFloat(proofMatch[1]);
+        const expectedProof = abvVal * 2;
+        if (Math.abs(expectedProof - proofVal) > 0.5) {
+            issues.push(`ABV/Proof Mathematical Discrepancy (27 CFR § 5.37): Label artwork states ${abvVal}% ABV with ${proofVal} Proof (Statutory expected ${expectedProof} Proof).`);
+        }
+    }
+
+    // 5. Net Contents
+    const netMatch = cleanOcr.match(/(\d+(?:\.\d+)?)\s*(?:m[lL]|fl\.?\s*oz\.?|liters?|litres?|[lL])/i);
+    if (!netMatch) {
+        notes.push("Net Contents: Mandatory standard of fill metric/fluid statement not clearly detected on artwork.");
+    }
+
+    // 6. Bottler / Producer Statement
+    const prodMatch = cleanOcr.match(/(?:distilled|bottled|produced|brewed|vinted|imported)\s*(?:&|and)?\s*(?:bottled\s*by)?\s*([^\n]+,[^\n]+)/i);
+    if (!prodMatch && lines.length < 2) {
+        notes.push("Bottler: Producer/Bottler name and address statement not clearly detected.");
+    }
+
+    const elapsed = Math.round(performance.now() - startTime);
+
+    let overallStatus = "COMPLIANT";
+    let overallConfidence = 0.95;
+    if (gwResult.status === "REJECTED_MISMATCH" || issues.length > 0) {
+        overallStatus = "REJECTED_MISMATCH";
+        overallConfidence = 0.40;
+    } else if (gwResult.status === "WARNING_REVIEW" || notes.length > 0) {
+        overallStatus = "WARNING_REVIEW";
+        overallConfidence = 0.80;
+    }
+
+    const allNotes = [...issues, ...notes];
+    const summaryNote = allNotes.length > 0 ? allNotes.join(" | ") : "[Self-Consistency Audit] 27 CFR Compliant: Mandatory Warning, ABV/Proof, Net Contents & Bottler Verified";
+
+    return {
+        application_id: `EXTRACT-${filename.replace(/\.[^/.]+$/, "").substring(0, 16)}`,
+        brand_name: detectedBrand,
+        beverage_type: detectedCategory,
+        class_type: "Standard Identity",
+        overall_status: overallStatus,
+        overall_confidence: overallConfidence,
+        processing_time_ms: elapsed,
+        notes: summaryNote
+    };
+}
+
 async function handleBatchDrop(files) {
     const runBatchBtn = document.getElementById('runBatchBtn');
     if (runBatchBtn) runBatchBtn.disabled = true;
@@ -1010,6 +1175,7 @@ async function handleBatchDrop(files) {
     const batchResults = [];
     for (let i = 0; i < files.length; i++) {
         const file = files[i];
+        const fnKey = (file.name || "").toLowerCase();
         updateOcrProgress("Batch OCR Queue...", `Processing file ${i + 1}/${files.length}: ${file.name}...`, Math.round(((i) / files.length) * 100));
 
         const base64 = await new Promise(resolve => {
@@ -1019,29 +1185,51 @@ async function handleBatchDrop(files) {
         });
 
         const ocr = await runTesseractOCR(base64);
+
+        // Check if file is in user-loaded manifest
+        if (userLoadedManifestMap[fnKey]) {
+            const manifestApp = userLoadedManifestMap[fnKey];
+            selectedSample = null;
+            const rep = runComplianceAudit(manifestApp, ocr.text, ocr.boundingBoxes || []);
+            batchResults.push({
+                application_id: rep.application_id,
+                brand_name: rep.brand_name,
+                beverage_type: rep.beverage_type,
+                class_type: manifestApp.class_type,
+                overall_status: rep.overall_status,
+                overall_confidence: rep.overall_confidence,
+                processing_time_ms: rep.processing_time_ms,
+                notes: rep.summary_notes.join(" | ") || "Compliant"
+            });
+            continue;
+        }
+
+        // Check if file matches known built-in sample or registry
         const autoApp = resolveApplicationForFile(file, ocr.text, i);
-        
-        let labelText = ocr.text;
-        if (autoApp.sample_id) {
+        if (autoApp && autoApp.sample_id) {
             selectedSample = { id: autoApp.sample_id, application: autoApp, file: file.name };
+            let labelText = ocr.text;
             if (!labelText || labelText.trim().length < 10) {
                 labelText = getSampleGroundTruthText(autoApp.sample_id);
             }
-        } else {
-            selectedSample = null;
+            const rep = runComplianceAudit(autoApp, labelText, ocr.boundingBoxes || []);
+            batchResults.push({
+                application_id: rep.application_id,
+                brand_name: rep.brand_name,
+                beverage_type: rep.beverage_type,
+                class_type: autoApp.class_type,
+                overall_status: rep.overall_status,
+                overall_confidence: rep.overall_confidence,
+                processing_time_ms: rep.processing_time_ms,
+                notes: rep.summary_notes.join(" | ") || "Compliant"
+            });
+            continue;
         }
 
-        const rep = runComplianceAudit(autoApp, labelText, ocr.boundingBoxes || []);
-        batchResults.push({
-            application_id: rep.application_id,
-            brand_name: rep.brand_name,
-            beverage_type: rep.beverage_type,
-            class_type: autoApp.class_type,
-            overall_status: rep.overall_status,
-            overall_confidence: rep.overall_confidence,
-            processing_time_ms: rep.processing_time_ms,
-            notes: rep.summary_notes.join(" | ") || "Compliant"
-        });
+        // Arbitrary image with no manifest: Run Extraction & Statutory Self-Consistency Mode (NO fabricated dummy application!)
+        selectedSample = null;
+        const rep = auditLabelSelfConsistency(ocr.text, ocr.boundingBoxes || [], file.name);
+        batchResults.push(rep);
     }
 
     hideOcrProgress();

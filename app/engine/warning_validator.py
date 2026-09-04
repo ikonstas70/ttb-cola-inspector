@@ -93,14 +93,22 @@ def validate_government_warning(extracted_text: str, bounding_box: BoundingBox =
     # 5. Overall exactness ratio
     if warning_segment:
         full_match_ratio = fuzz.ratio(FULL_STATUTORY_WARNING.lower(), warning_segment.lower()) / 100.0
+        token_ratio = fuzz.token_sort_ratio(FULL_STATUTORY_WARNING.lower(), warning_segment.lower()) / 100.0
+        overall_fidelity = max(full_match_ratio, token_ratio)
     else:
-        full_match_ratio = 0.0
+        overall_fidelity = 0.0
 
     # 6. Determine status
     if header_valid and pregnancy_clause_valid and machinery_clause_valid and not issues:
         status = ComplianceStatus.COMPLIANT
-    elif not header_valid or not pregnancy_clause_valid or not machinery_clause_valid:
+    elif not header_valid:
         status = ComplianceStatus.REJECTED_MISMATCH
+    elif not pregnancy_clause_valid or not machinery_clause_valid:
+        if overall_fidelity >= 0.75:
+            status = ComplianceStatus.WARNING_REVIEW
+            issues.append(f"OCR NOISE DETECTED: Warning statement is present with {overall_fidelity * 100:.1f}% statutory fidelity; flagged for agent visual confirmation.")
+        else:
+            status = ComplianceStatus.REJECTED_MISMATCH
     else:
         status = ComplianceStatus.WARNING_REVIEW
         
@@ -110,7 +118,7 @@ def validate_government_warning(extracted_text: str, bounding_box: BoundingBox =
         header_detected_text=header_detected,
         pregnancy_clause_valid=pregnancy_clause_valid,
         machinery_clause_valid=machinery_clause_valid,
-        exact_text_match_ratio=round(full_match_ratio, 3),
+        exact_text_match_ratio=round(overall_fidelity, 3),
         issues=issues,
         raw_extracted_warning=warning_segment if warning_segment else None,
         bounding_box=bounding_box

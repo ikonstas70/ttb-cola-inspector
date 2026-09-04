@@ -258,10 +258,19 @@ function validateGovernmentWarning(extractedText) {
     }
 
     const fullMatchRatio = warningSegment ? stringSimilarityRatio(FULL_STATUTORY_WARNING.toLowerCase(), warningSegment.toLowerCase()) : 0.0;
+    const tokenMatchRatio = warningSegment ? tokenSortRatio(FULL_STATUTORY_WARNING, warningSegment) : 0.0;
+    const overallFidelity = Math.max(fullMatchRatio, tokenMatchRatio);
 
     let status = "COMPLIANT";
-    if (!headerValid || !pregnancyValid || !machineryValid) {
+    if (!headerValid) {
         status = "REJECTED_MISMATCH";
+    } else if (!pregnancyValid || !machineryValid) {
+        if (overallFidelity >= 0.75) {
+            status = "WARNING_REVIEW";
+            issues.push(`OCR NOISE DETECTED: Warning statement is present with ${(overallFidelity * 100).toFixed(1)}% statutory fidelity; flagged for agent visual confirmation.`);
+        } else {
+            status = "REJECTED_MISMATCH";
+        }
     } else if (issues.length > 0) {
         status = "WARNING_REVIEW";
     }
@@ -272,7 +281,7 @@ function validateGovernmentWarning(extractedText) {
         header_detected_text: headerDetected,
         pregnancy_clause_valid: pregnancyValid,
         machinery_clause_valid: machineryValid,
-        exact_text_match_ratio: Number(fullMatchRatio.toFixed(3)),
+        exact_text_match_ratio: Number(overallFidelity.toFixed(3)),
         issues,
         raw_extracted_warning: warningSegment || null
     };

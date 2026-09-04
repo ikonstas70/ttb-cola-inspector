@@ -633,6 +633,170 @@ table.report-table tr:hover {
   color: #d1d5db;
 }
 
+/* OCR Progress Modal Overlay */
+.ocr-progress-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(11, 15, 25, 0.88);
+  backdrop-filter: blur(4px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  border-radius: 8px;
+  padding: 24px;
+}
+
+.ocr-progress-box {
+  background: #1e293b;
+  border: 1px solid #3b82f6;
+  border-radius: 8px;
+  padding: 20px 24px;
+  width: 90%;
+  max-width: 440px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+.ocr-progress-bar {
+  width: 100%;
+  height: 10px;
+  background: #0f172a;
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 14px 0 10px;
+  border: 1px solid #334155;
+}
+
+.ocr-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #3b82f6, #10b981);
+  width: 0%;
+  transition: width 0.2s ease;
+}
+
+/* 27 CFR Part 16 Visual Diff Viewer */
+.diff-container {
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  padding: 14px;
+  margin-top: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  line-height: 1.6;
+}
+
+.diff-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed #1e293b;
+}
+
+.diff-row:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.diff-label {
+  min-width: 130px;
+  font-weight: 700;
+  color: #94a3b8;
+  font-size: 0.76rem;
+  text-transform: uppercase;
+}
+
+.diff-content {
+  flex: 1;
+  word-break: break-word;
+}
+
+.diff-highlight-good {
+  background: rgba(16, 185, 129, 0.25);
+  color: #34d399;
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-weight: 700;
+}
+
+.diff-highlight-bad {
+  background: rgba(239, 68, 68, 0.35);
+  color: #fca5a5;
+  padding: 2px 4px;
+  border-radius: 3px;
+  text-decoration: underline;
+  font-weight: 700;
+}
+
+.diff-missing {
+  background: rgba(245, 158, 11, 0.3);
+  color: #fde68a;
+  padding: 2px 4px;
+  border-radius: 3px;
+  font-style: italic;
+}
+
+/* Enhanced Bounding Box Pulses & Tooltips */
+.bbox-rect {
+  position: absolute;
+  border: 2px solid rgba(59, 130, 246, 0.85);
+  background: rgba(59, 130, 246, 0.15);
+  border-radius: 3px;
+  pointer-events: auto;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.bbox-rect:hover,
+.bbox-rect.highlighted {
+  border-color: #10b981 !important;
+  background: rgba(16, 185, 129, 0.35) !important;
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.7);
+  transform: scale(1.02);
+  z-index: 10;
+}
+
+.bbox-rect.error-box {
+  border-color: #ef4444;
+  background: rgba(239, 68, 68, 0.2);
+}
+
+.bbox-rect.error-box:hover,
+.bbox-rect.error-box.highlighted {
+  border-color: #f87171 !important;
+  background: rgba(239, 68, 68, 0.45) !important;
+  box-shadow: 0 0 16px rgba(239, 68, 68, 0.8);
+}
+
+.bbox-tag {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  background: #1e293b;
+  color: #f1f5f9;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 3px;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  border: 1px solid #475569;
+}
+
+.bbox-rect:hover .bbox-tag,
+.bbox-rect.highlighted .bbox-tag {
+  opacity: 1;
+}
+
 /* Footer */
 footer.gov-footer {
   text-align: center;
@@ -643,3 +807,4 @@ footer.gov-footer {
   background: #030712;
   margin-top: 40px;
 }
+

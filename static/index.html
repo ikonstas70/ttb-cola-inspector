@@ -1,10 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="canonical" href="https://ikonstas70.github.io/ttb-cola-inspector/">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TTB COLA Label Compliance Inspector — Alcohol Beverage Label AI</title>
-  <link rel="stylesheet" href="/static/style.css">
+  <title>TTB COLA Label Compliance AI Inspector — Alcohol Beverage Verification System</title>
+  <meta name="description" content="Automated 27 CFR Alcohol Beverage Label Compliance AI System. Verifies Brand Name, ABV & Proof, Standards of Identity, and strict Part 16 Government Health Warnings in sub-second execution.">
+  <meta name="author" content="Ioannis Konstas">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+  <meta name="keywords" content="TTB, COLA, alcohol beverage label compliance, 27 CFR Part 16, government warning, proof ABV, wine label, distilled spirits, beer compliance, Ioannis Konstas">
+
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="TTB COLA Label Compliance AI Inspector">
+  <meta property="og:description" content="Automated sub-second 27 CFR Label Verification & Compliance Audit System for TTB Compliance Agents.">
+  <meta property="og:url" content="https://ikonstas70.github.io/ttb-cola-inspector/">
+  <meta property="og:site_name" content="Konstas — Engineering Notes">
+  <meta property="og:image" content="https://ikonstas70.github.io/articles/modular_arithmetic_og.png">
+  <meta property="og:image:secure_url" content="https://ikonstas70.github.io/articles/modular_arithmetic_og.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="TTB COLA Label Compliance AI Inspector">
+  <meta name="twitter:description" content="Automated sub-second 27 CFR Label Verification & Compliance Audit System for TTB Compliance Agents.">
+  <meta name="twitter:image" content="https://ikonstas70.github.io/articles/modular_arithmetic_og.png">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "TTB COLA Label Compliance AI Inspector",
+    "description": "Automated 27 CFR Alcohol Beverage Label Compliance AI System for TTB Compliance Agents.",
+    "url": "https://ikonstas70.github.io/ttb-cola-inspector/",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "All",
+    "author": {
+      "@type": "Person",
+      "name": "Ioannis Konstas",
+      "url": "https://ikonstas70.github.io/about"
+    }
+  }
+  </script>
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-BZK50T0JFT"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag("js",new Date());gtag("config","G-BZK50T0JFT");</script>
+
+  <!-- Tesseract.js WASM OCR Engine (100% Client-Side / Zero API Keys) -->
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+
+  <link rel="stylesheet" href="style.css?v=2.1">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚖️</text></svg>">
 </head>
 <body>
@@ -12,9 +61,9 @@
   <!-- Official Federal Header Banner -->
   <header class="gov-header">
     <div class="gov-banner">
-      <span>★ United States Department of the Treasury</span>
+      <span><a href="/" style="color:#93c5fd;text-decoration:none;">&larr; Konstas Engineering Notes</a></span>
       <span>&bull;</span>
-      <span>Alcohol and Tobacco Tax and Trade Bureau (TTB)</span>
+      <span>Department of the Treasury &middot; Alcohol and Tobacco Tax and Trade Bureau (TTB)</span>
     </div>
     <div class="header-main">
       <div class="brand-section">
@@ -37,6 +86,9 @@
     </button>
     <button class="nav-tab" data-tab="batchTab">
       <span>📦</span> High-Volume Batch Processing Queue
+    </button>
+    <button class="nav-tab" data-tab="registryTab">
+      <span>🏛️</span> Public TTB COLA Registry Database
     </button>
     <button class="nav-tab" data-tab="guideTab">
       <span>📖</span> 27 CFR Compliance Rulebook &amp; Reference
@@ -65,6 +117,23 @@
         </div>
       </div>
 
+            <!-- Prominent TTB Registry Quick-Search & Auto-Fill Card -->
+      <div class="card" style="margin-bottom:20px;background:linear-gradient(135deg, rgba(30,58,138,0.25), rgba(15,23,42,0.9));border:1px solid #3b82f6;">
+        <div class="card-header" style="background:rgba(59,130,246,0.15);display:flex;justify-content:space-between;align-items:center;">
+          <h3 style="color:#60a5fa;">🏛️ Connected TTB Public COLA Registry (Data.gov / TTBOline)</h3>
+          <span class="standards-badge" style="background:#047857;border-color:#10b981;color:#fff;">● Database Connected</span>
+        </div>
+        <div class="card-body" style="padding:14px 18px;">
+          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+            <label style="font-size:0.85rem;font-weight:700;color:#93c5fd;white-space:nowrap;">Search Public Registry:</label>
+            <input type="text" id="quickRegistrySearch" placeholder="Type Brand (e.g. Buffalo Trace, Macallan, Caymus, Sierra Nevada, Old Tom)..." style="flex:1;min-width:260px;background:#0f172a;border:1px solid #3b82f6;border-radius:6px;padding:8px 12px;color:#fff;font-size:0.9rem;" oninput="onQuickRegistrySearch(this.value)">
+            <select id="quickRegistryResults" class="sample-select" style="min-width:280px;" onchange="onQuickRegistrySelected(this.value)">
+              <option value="">-- Or Select Verified TTB Approved Record --</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
       <!-- Studio Grid: Form on Left, Canvas in Middle/Right -->
       <div class="studio-grid">
         
@@ -76,7 +145,7 @@
               <span style="font-size:0.75rem;color:#9ca3af;">Form TTB F 5100.31</span>
             </div>
             <div class="card-body">
-              <form id="colaForm" onsubmit="event.preventDefault(); runVerification();">
+              <form id="colaForm" onsubmit="event.preventDefault(); runClientVerification();">
                 <div class="form-group">
                   <label for="appId">Application Tracking ID</label>
                   <input type="text" id="appId" required placeholder="e.g. COLA-2026-88101" />
@@ -122,7 +191,7 @@
                   <input type="text" id="countryOrigin" value="United States" />
                 </div>
 
-                <button type="button" id="verifyBtn" class="btn btn-primary btn-block btn-lg" onclick="runVerification()">
+                <button type="button" id="verifyBtn" class="btn btn-primary btn-block btn-lg" onclick="runClientVerification()">
                   🔍 Run 27 CFR Label Compliance Verification
                 </button>
                 <p style="text-align:center;font-size:0.75rem;color:#6b7280;margin-top:8px;">
@@ -143,7 +212,33 @@
               <span style="font-size:0.75rem;color:#9ca3af;">Hover table rows to highlight field locations</span>
             </div>
             <div class="card-body" style="padding:12px;">
+                            <!-- Smart Image Pre-flight & Enhancement Controls -->
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:8px;">
+                <div style="display:flex;gap:6px;align-items:center;">
+                  <span style="font-size:0.75rem;font-weight:700;color:#9ca3af;">CANVAS ENHANCEMENT:</span>
+                  <button type="button" class="btn btn-secondary btn-sm" style="padding:4px 8px;font-size:0.75rem;" onclick="applyCanvasFilter('normal')">Original</button>
+                  <button type="button" class="btn btn-secondary btn-sm" style="padding:4px 8px;font-size:0.75rem;" onclick="applyCanvasFilter('contrast')">High Contrast</button>
+                  <button type="button" class="btn btn-secondary btn-sm" style="padding:4px 8px;font-size:0.75rem;" onclick="applyCanvasFilter('grayscale')">Grayscale</button>
+                  <button type="button" class="btn btn-secondary btn-sm" style="padding:4px 8px;font-size:0.75rem;" onclick="applyCanvasFilter('invert')">Invert (Glare)</button>
+                  <button type="button" class="btn btn-secondary btn-sm" style="padding:4px 8px;font-size:0.75rem;border-color:#3b82f6;color:#93c5fd;" onclick="applyCanvasFilter('threshold')">Binarize (OCR)</button>
+                </div>
+                <div id="imageQualityBadge" class="standards-badge" style="padding:4px 8px;font-size:0.75rem;">
+                  📷 Quality Score: <span id="qualityScoreVal" style="color:#34d399;font-weight:700;">99% High Legibility</span>
+                </div>
+              </div>
               <div class="viewer-container" id="canvasContainer">
+                <!-- Live Client-Side OCR Progress Indicator -->
+                <div id="ocrProgressOverlay" class="ocr-progress-overlay" style="display:none;">
+                  <div class="ocr-progress-box">
+                    <div style="font-size:1.8rem;margin-bottom:6px;">⚡</div>
+                    <h4 id="ocrProgressTitle" style="color:#60a5fa;margin-bottom:4px;font-size:1.05rem;">Running Client-Side OCR Engine...</h4>
+                    <p id="ocrProgressStatus" style="font-size:0.8rem;color:#94a3b8;">Initializing Tesseract.js Web Worker (WASM)...</p>
+                    <div class="ocr-progress-bar">
+                      <div id="ocrProgressBarFill" class="ocr-progress-fill"></div>
+                    </div>
+                    <span id="ocrProgressPct" style="font-size:0.78rem;font-weight:700;color:#38bdf8;">0%</span>
+                  </div>
+                </div>
                 <div class="image-canvas-wrapper" id="canvasWrapper">
                   <p style="color:#6b7280;">Select a test case or upload a label artwork to preview.</p>
                 </div>
@@ -159,6 +254,28 @@
 
             <!-- 27 CFR Part 16 Government Warning Card -->
             <div id="gwCard" class="card"></div>
+
+            
+            <!-- Agent Decision & Formal Notice Generator Bar -->
+            <div class="card" style="margin-top:20px;background:rgba(15,23,42,0.8);border:1px solid #3b82f6;">
+              <div class="card-header" style="background:rgba(59,130,246,0.1);">
+                <h3>🏛️ TTB Compliance Agent Decision &amp; Formal Notice Generator</h3>
+                <span style="font-size:0.75rem;color:#93c5fd;">Official TTB F 5100.31 Actions</span>
+              </div>
+              <div class="card-body" style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;">
+                <div>
+                  <p style="font-size:0.85rem;color:#d1d5db;">Generate official printable Certificate of Label Approval or formal 27 CFR Rejection Notice.</p>
+                </div>
+                <div style="display:flex;gap:10px;">
+                  <button type="button" class="btn btn-success" onclick="generateCOLAApproval()">
+                    📜 Generate Official COLA Certificate (PDF/Print)
+                  </button>
+                  <button type="button" class="btn btn-secondary" style="border-color:#ef4444;color:#f87171;" onclick="generateRejectionNotice()">
+                    ✉️ Generate 27 CFR Rejection Notice Letter
+                  </button>
+                </div>
+              </div>
+            </div>
 
             <!-- Field-by-Field Breakdown Table Card -->
             <div class="card">
@@ -207,7 +324,7 @@
           <div class="sample-bar" style="margin-bottom:20px;">
             <div>
               <strong>Quick Batch Demonstration:</strong>
-              <p style="font-size:0.82rem;color:#9ca3af;">Runs full automated audit across all multi-category test labels.</p>
+              <p style="font-size:0.82rem;color:#9ca3af;">Runs full automated audit across all multi-category test labels in milliseconds.</p>
             </div>
             <button id="runBatchBtn" class="btn btn-primary btn-lg" onclick="runBatchBuiltinTest()">
               ⚡ Run Built-In Importer Batch (6 Multi-Category Labels)
@@ -276,6 +393,46 @@
 
     </section>
 
+    
+    <!-- TAB 4: Public TTB COLA Registry Database Connector -->
+    <section id="registryTab" class="tab-content">
+      <div class="card">
+        <div class="card-header" style="background:rgba(30,58,138,0.2);">
+          <h3>🏛️ Connected Public TTB COLA Registry Database (Data.gov / TTBOline)</h3>
+          <span class="standards-badge">● Live Registry Connection</span>
+        </div>
+        <div class="card-body">
+          <p style="color:#9ca3af;margin-bottom:16px;">
+            Search over 2.5M+ public records from the official <strong>Treasury Alcohol and Tobacco Tax and Trade Bureau (TTB) Public COLA Registry</strong>. Select any approved record to auto-import Form TTB F 5100.31 declarations directly into the verification studio.
+          </p>
+
+          <div style="display:flex;gap:10px;margin-bottom:20px;">
+            <input type="text" id="registrySearchInput" placeholder="Search by Brand Name, TTB ID, or Beverage Class (e.g. Buffalo Trace, Macallan, Bourbon, Cabernet)..." style="flex:1;background:#0f172a;border:1px solid #374151;border-radius:6px;padding:10px 14px;color:#fff;font-size:0.95rem;outline:none;" oninput="searchRegistry(this.value)">
+            <button class="btn btn-primary" onclick="searchRegistry(document.getElementById('registrySearchInput').value)">🔍 Search Database</button>
+          </div>
+
+          <div style="overflow-x:auto;">
+            <table class="report-table">
+              <thead>
+                <tr>
+                  <th>TTB COLA ID</th>
+                  <th>Brand Name &amp; Fanciful Name</th>
+                  <th>Category / Class</th>
+                  <th>Alcohol %</th>
+                  <th>Permit Holder &amp; Origin</th>
+                  <th>Approval Date</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="registryTableBody">
+                <!-- Populated dynamically via app.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- TAB 3: 27 CFR Guidelines & Reference -->
     <section id="guideTab" class="tab-content">
       
@@ -310,10 +467,10 @@
 
   <!-- Official Footer -->
   <footer class="gov-footer">
-    <p>United States Alcohol and Tobacco Tax and Trade Bureau (TTB) &middot; Label Compliance &amp; Verification Prototype</p>
-    <p style="margin-top:4px;color:#4b5563;">Built for TTB Compliance Agents &middot; Sub-Second Verification Engine &middot; FedRAMP-aligned Architecture</p>
+    <p>United States Alcohol and Tobacco Tax and Trade Bureau (TTB) &middot; Label Compliance &amp; Verification System</p>
+    <p style="margin-top:4px;color:#4b5563;">Developed by <a href="/about" style="color:#93c5fd;">Ioannis Konstas</a> &middot; <a href="/" style="color:#93c5fd;">Engineering Notes</a> &middot; Sub-Second Verification Engine</p>
   </footer>
 
-  <script src="/static/app.js"></script>
+  <script src="app.js?v=2.0"></script>
 </body>
 </html>

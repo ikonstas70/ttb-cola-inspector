@@ -1,0 +1,418 @@
+[
+  {
+    "id": "EVAL-001",
+    "category": "Distilled Spirits",
+    "brand_name": "BUFFALO TRACE",
+    "class_type": "Kentucky Straight Bourbon Whiskey",
+    "alcohol_content": "45% Alc./Vol. (90 Proof)",
+    "net_contents": "750 mL",
+    "bottler_address": "Buffalo Trace Distillery, Frankfort, KY",
+    "country_origin": "United States",
+    "label_text": "BUFFALO TRACE\nKentucky Straight Bourbon Whiskey\n45% ALC./VOL. (90 PROOF) | 750 mL\nDistilled & Bottled by Buffalo Trace Distillery, Frankfort, KY\nGOVERNMENT WARNING: (1) According to the Surgeon General, women should not drink alcoholic beverages during pregnancy because of the risk of birth defects. (2) Consumption of alcoholic beverages impairs your ability to drive a car or operate machinery, and may cause health problems.",
+    "expected_status": "COMPLIANT",
+    "expected_issues": []
+  },
+  {
+    "id": "EVAL-002",
+    "category": "Distilled Spirits",
+    "brand_name": "WOODFORD RESERVE",
+    "class_type": "Straight Bourbon Whiskey",
+    "alcohol_content": "45.2% ABV",
+    "net_contents": "750 mL",
+    "bottler_address": "Woodford Reserve Distillery, Versailles, KY",
+    "country_origin": "United States",
+    "label_text": "WOODFORD RESERVE\nDistiller's Select Straight Bourbon Whiskey\n45.2% ALC. BY VOL. (90.4 PROOF) | 750 mL\nWoodford Reserve Distillery, Versailles, Kentucky\nGOVERNMENT WARNING: (1) According to the Surgeon General, women should not drink alcoholic beverages during pregnancy because of the risk of birth defects. (2) Consumption of alcoholic beverages impairs your ability to drive a car or operate machinery, and may cause health problems.",
+    "expected_status": "COMPLIANT",
+    "expected_issues": []
+  },
+  {
+    "id": "EVAL-003",
+    "category": "Distilled Spirits",
+    "brand_name": "TITO'S HANDMADE VODKA",
+    "class_type": "Vodka",
+    "alcohol_content": "40% Alc./Vol. (80 Proof)",
+    "net_contents": "1 Liter",
+    "bottler_address": "Fifth Generation Inc., Austin, TX",
+    "country_origin": "United States",
+    "label_text": "TITO'S HANDMADE VODKA\nCrafted in an Old Fashioned Pot Still\n40% ALC./VOL. (80 PROOF) | 1.0 L\nDistilled and Bottled by Fifth Generation, Austin, TX\nGOVERNMENT WARNING: (1) According to the Surgeon General, women should not drink alcoholic beverages during pregnancy because of the risk of birth defects. (2) Consumption of alcoholic beverages impairs your ability to drive a car or operate machinery, and may cause health problems.",
+    "expected_status": "COMPLIANT",
+    "expected_issues": []
+  },
+  {
+    "id": "EVAL-004",
+    "category": "Distilled Spirits",
+    "brand_name": "CASAMIGOS",
+    "class_type": "Reposado Tequila",
+    "alcohol_content": "40% ABV",
+    "net_contents": "750 mL",
+    "bottler_address": "Casamigos Spirits Co., White Plains, NY",
+    "country_origin": "Mexico",
+    "label_text": "CASAMIGOS TEQUILA\n100% Blue Agave Reposado\n40% ALC. BY VOL. (80 PROOF) | 750 mL - Product of Mexico\nImported by Casamigos Spirits, White Plains, NY\nGOVERNMENT WARNING: (1) According to the Surgeon General, women should not drink alcoholic beverages during pregnancy because of the risk of birth defects. (2) Consumption of alcoholic beverages impairs your ability to drive a car or operate machinery, and may cause health problems.",
+    "expected_status": "COMPLIANT",
+    "expected_issues": []
+  },
+  {
+    "id": "EVAL-005",
+    "category": "Distilled Spirits",
+    "brand_name": "HENDRICK'S",
+    "class_type": "Gin",
+    "alcohol_content": "44% Alc./Vol. (88 Proof)",
+    "net_contents": "750 mL",
+    "bottler_address": "William Grant & Sons, New York, NY",
+    "country_origin": "United Kingdom",
+    "label_text": "HENDRICK'S GIN\nDistilled and Bottled in Scotland\n44% ALC./VOL. (88 PROOF) | 750 mL - Product of Scotland\nImported by William Grant & Sons Inc., New York, NY\nGOVERNMENT WARNING: (1) According to the Surgeon General, women should not drink alcoholic beverages during pregnancy because of the risk of birth defects. (2) Consumption of alcoholic beverages impairs your ability to drive a car or operate machinery, and may cause health problems.",
+    "expected_status": "COMPLIANT",
+    "expected_issues": []
+  },
+  {
+    "id": "EVAL-006",
+    "category": "Wine",
+    "brand_name": "CAYMUS VINEYARDS",
+    "class_type": "Cabernet Sauvignon",
+    "alcohol_content": "14.6% ABV",
+    "net_contents": "750 mL",
+    "bottler_address": "Caymus Vineyards, Rutherford, CA",
+    "country_origin": "United States",
+    "label_text": "CAYMUS VINEYARDS\nNapa Valley Cabernet Sauvignon 2022\nALC. 14.6% BY VOL. | 750 ML\nProduced and Bottled by Caymus Vineyards, Rutherford, California\nGOVERNMENT WARNING: (1) According to the Surgeon General, women should not drink alcoholic beverages during pregnancy because of the risk of birth defects. (2) Consumption of alcoholic beverages impairs your ability to drive a car or operate machinery, and may cause health problems.",
+    "expected_status": "COMPLIANT",
+    "expected_issues": []
+  },
+  {
+    "id": "EVAL-007",
+    "category": "Wine",
+    "brand_name": "STAG'S LEAP WINE CELLARS",
+    "class_type": "Chardonnay",
+    "alcohol_content": "13.8% ABV",
+    "net_contents": "750 mL",
+    "bottler_address": "Stag's Leap Wine Cellars, Napa, CA",
+    "country_origin": "United States",
+    "label_text": "STAG'S LEAP WINE CELLARS\nKaria Chardonnay - Napa Valley\nALCOHOL 13.8% BY VOLUME | 750 mL\nVinted & Bottled by Stag's Leap Wine Cellars, Napa, CA\nGOVERNMENT WARNING: (1) According to the Surgeon General, women should not drink alcoholic beverages during pregnancy because of the risk of birth defects. (2) Consumption of alcoholic beverages impairs your ability to drive a car or operate machinery, and may cause health problems.",
+    "expected_status": "COMPLIANT",
+    "expected_issues": []
+  },
+  {
+    "id": "EVAL-008",
+    "category": "Wine",
+    "brand_name": "SILVER OAK",
+    "class_type": "Alexander Valley Cabernet Sauvignon",
+    "alcohol_content": "14.2% ABV",
+    "net_contents": "750 mL",
+    "bottler_address": "Silver Oak Cellars, Oakville, CA",
+    "country_origin": "United States",
+    "label_text": "SILVER OAK\nAlexander Valley Cabernet Sauvignon 2021\nALC. 14.2% BY VOL. | 750 mL\nCellared and Bottled by Silver Oak Cellars, Oakville, California\nGOVERNMENT WARNING: (1) According to the Surgeon General, women should not drink alcoholic beverages during pregnancy because of the risk of birth defects. (2) Consumption of alcoholic beverages impairs your ability to drive a car or operate machinery, and may cause health problems.",
+    "expected_status": "COMPLIANT",
+    "expected_issues": []
+  },
+  {
+    "id": "EVAL-009",
+    "category": "Wine",
+    "brand_name": "LA CREMA",
+    "class_type": "Pinot Noir",
+    "alcohol_content": "13.5% ABV",
+    "net_contents": "750 mL",
+    "bottler_address": "La Crema Winery, Windsor, CA",
+    "country_origin": "United States",
+    "label_text": "LA CREMA\nSonoma Coast Pinot Noir\n13.5% ALC./VOL. | 750 mL\nGrown, Produced & Bottled by La Crema Winery, Windsor, CA\nGOVERNMENT WARNING: (1) According to the Surgeon General, women should not drink alcoholic beverages during pregnancy because of the risk of birth defects. (2) Consumption of alcoholic beverages impairs your ability to drive a car or operate machinery, and may cause health problems.",
+    "expected_status": "COMPLIANT",
+    "expected_issues": []
+  },
+  {
+    "id": "EVAL-010",
+    "category": "Wine",
+    "brand_name": "KENDALL-JACKSON",
+    "class_type": "Sauvignon Blanc",
+    "alcohol_content": "13.5% ABV",
+    "net_contents": "750 mL",
+    "bottler_address": "Kendall-Jackson, Santa Rosa, CA",
+    "country_origin": "United States",
+    "label_text": "KENDALL-JACKSON\nVintner's Reserve Sauvignon Blanc - California\nALCOHOL 13.5% BY VOLUME | 750 mL\nBottled by Kendall-Jackson Winery, Santa Rosa, CA\nGOVERNMENT WARNING: (1) According to the Surgeon General, women should not drink alcoholic beverages during pregnancy because of the risk of birth defects. (2) Consumption of alcoholic beverages impairs your ability to drive a car or operate machinery, and may cause health problems.",
+    "expected_status": "COMPLIANT",
+    "expected_issues": []
+  },
+  {
+    "id": "EVAL-011",
+    "category": "Malt Beverage / Beer",
+    "brand_name": "SIERRA NEVADA",
+    "class_type": "Pale Ale",
+    "alcohol_content": "5.6% ABV",
+    "net_contents": "12 FL. OZ.",
+    "bottler_address": "Sierra Nevada Brewing Co., Chico, CA",
+    "country_origin": "United States",
+    "label_text": "SIERRA NEVADA\nPale Ale - Handcrafted Beer\n5.6% ALC. BY VOL. | 12 FL. OZ. (355 mL)\nBrewed & Bottled by Sierra Nevada Brewing Co., Chico, CA & Mills River, NC\nGOVERNMENT WARNING: (1) According to the Surgeon General, women should not drink alcoholic beverages during pregnancy because of the risk of birth defects. (2) Consumption of alcoholic beverages impairs your ability to drive a car or operate machinery, and may cause health problems.",
+    "expected_status": "COMPLIANT",
+    "expected_issues": []
+  },
+  {
+    "id": "EVAL-012",
+    "category": "Malt Beverage / Beer",
+    "brand_name": "RUSSIAN RIVER",
+    "class_type": "Double India Pale Ale",
+    "alcohol_content": "8.0% ABV",
+    "net_contents": "510 mL",
+    "bottler_address": "Russian River Brewing Co., Santa Rosa, CA",
+    "country_origin": "United States",
+    "label_text": "RUSSIAN RIVER BREWING COMPANY\nPliny the Elder Double IPA\nALC. 8.0% BY VOL. | 1 PT. 1.25 FL. OZ. (510 mL)\nBrewed and Bottled by Russian River Brewing Company, Santa Rosa, CA\nGOVERNMENT WARNING: (1) According to the Surgeon General, women should not drink alcoholic beverages during pregnancy because of the risk of birth defects. (2) Consumption of alcoholic beverages impairs your ability to drive a car or operate machinery, and may cause health problems.",
+    "expected_status": "COMPLIANT",
+    "expected_issues": []
+  },
+  {
+    "id": "EVAL-013",
+    "category": "Malt Beverage / Beer",
+    "brand_name": "BELL'S",
+    "class_type": "Two Hearted Ale",
+    "alcohol_content": "7.0% ABV",
+    "net_contents": "12 FL. OZ.",
+    "bottler_address": "Bell's Brewery, Comstock, MI",
+    "country_origin": "United States",
+    "label_text": "BELL'S TWO HEARTED ALE\nAmerican IPA - 100% Centennial Hops\n7.0% ALC./VOL. | 12 FL. OZ.\nBrewed & Canned by Bell's Brewery Inc., Comstock, MI\nGOVERNMENT WARNING: (1) According to the Surgeon General, women should not drink alcoholic beverages during pregnancy because of the risk of birth defects. (2) Consumption of alcoholic beverages impairs your ability to drive a car or operate machinery, and may cause health problems.",
+    "expected_status": "COMPLIANT",
+    "expected_issues": []
+  },
+  {
+    "id": "EVAL-014",
+    "category": "Malt Beverage / Beer",
+    "brand_name": "FOUNDERS",
+    "class_type": "Imperial Stout",
+    "alcohol_content": "8.3% ABV",
+    "net_contents": "12 FL. OZ.",
+    "bottler_address": "Founders Brewing Co., Grand Rapids, MI",
+    "country_origin": "United States",
+    "label_text": "FOUNDERS BREWING CO.\nBreakfast Stout - Imperial Stout (Double Chocolate Coffee Oatmeal Stout)\n8.3% ALC. BY VOL. | 12 FL. OZ.\nBrewed & Bottled by Founders Brewing Co., Grand Rapids, MI\nGOVERNMENT WARNING: (1) According to the Surgeon General, women should not drink alcoholic beverages during pregnancy because of the risk of birth defects. (2) Consumption of alcoholic beverages impairs your ability to drive a car or operate machinery, and may cause health problems.",
+    "expected_status": "COMPLIANT",
+    "expected_issues": []
+  },
+  {
+    "id": "EVAL-015",
+    "category": "Malt Beverage / Beer",
+    "brand_name": "GUINNESS",
+    "class_type": "Extra Stout",
+    "alcohol_content": "5.6% ABV",
+    "net_contents": "11.2 FL. OZ.",
+    "bottler_address": "Diageo Beer Company USA, New York, NY",
+    "country_origin": "Ireland",
+    "label_text": "GUINNESS EXTRA STOUT\nBrewed in Dublin, Ireland\n5.6% ALC./VOL. | 11.2 FL. OZ. (330 mL)\nImported by Diageo Beer Company USA, New York, NY\nGOVERNMENT WARNING: (1) According to the Surgeon General, women should not drink alcoholic beverages during pregnancy because of the risk of birth defects. (2) Consumption of alcoholic beverages impairs your ability to drive a car or operate machinery, and may cause health problems.",
+    "expected_status": "COMPLIANT",
+    "expected_issues": []
+  },
+  {
+    "id": "EVAL-016",
+    "category": "Distilled Spirits",
+    "brand_name": "KNOB CREEK",
+    "class_type": "Kentucky Straight Bourbon",
+    "alcohol_content": "50% Alc./Vol. (100 Proof)",
+    "net_contents": "750 mL",
+    "bottler_address": "Knob Creek Distillery, Clermont, KY",
+    "country_origin": "United States",
+    "label_text": "KNOB CREEK\nSmall Batch Straight Bourbon Whiskey\n45% ALC. BY VOL. (90 PROOF) | 750 mL\nBottled by Knob Creek Distilling Co., Clermont, KY\nGOVERNMENT WARNING: (1) According to the Surgeon General, women should not drink alcoholic beverages during pregnancy because of the risk of birth defects. (2) Consumption of alcoholic beverages impairs your ability to drive a car or operate machinery, and may cause health problems.",
+    "expected_status": "REJECTED_MISMATCH",
+    "expected_issues": [
+      "ABV Mismatch (50% on app vs 45% on label)"
+    ]
+  },
+  {
+    "id": "EVAL-017",
+    "category": "Wine",
+    "brand_name": "DUCKHORN",
+    "class_type": "Napa Valley Merlot",
+    "alcohol_content": "14.5% ABV",
+    "net_contents": "750 mL",
+    "bottler_address": "Duckhorn Vineyards, St. Helena, CA",
+    "country_origin": "United States",
+    "label_text": "DUCKHORN VINEYARDS\nNapa Valley Merlot 2021\n13.5% ALC./VOL. | 750 mL\nProduced and Bottled by Duckhorn Vineyards, St. Helena, CA\nGOVERNMENT WARNING: (1) According to the Surgeon General, women should not drink alcoholic beverages during pregnancy because of the risk of birth defects. (2) Consumption of alcoholic beverages impairs your ability to drive a car or operate machinery, and may cause health problems.",
+    "expected_status": "REJECTED_MISMATCH",
+    "expected_issues": [
+      "ABV Mismatch (14.5% on app vs 13.5% on label)"
+    ]
+  },
+  {
+    "id": "EVAL-018",
+    "category": "Malt Beverage / Beer",
+    "brand_name": "LAGUNITAS",
+    "class_type": "India Pale Ale",
+    "alcohol_content": "6.2% ABV",
+    "net_contents": "12 FL. OZ.",
+    "bottler_address": "Lagunitas Brewing Co., Petaluma, CA",
+    "country_origin": "United States",
+    "label_text": "LAGUNITAS IPA\nIndia Pale Ale\n7.5% ALC. BY VOL. | 12 FL. OZ.\nBrewed & Bottled by Lagunitas Brewing Company, Petaluma, CA\nGOVERNMENT WARNING: (1) According to the Surgeon General, women should not drink alcoholic beverages during pregnancy because of the risk of birth defects. (2) Consumption of alcoholic beverages impairs your ability to drive a car or operate machinery, and may cause health problems.",
+    "expected_status": "REJECTED_MISMATCH",
+    "expected_issues": [
+      "ABV Mismatch (6.2% on app vs 7.5% on label)"
+    ]
+  },
+  {
+    "id": "EVAL-019",
+    "category": "Distilled Spirits",
+    "brand_name": "MAKER'S MARK",
+    "class_type": "Kentucky Straight Bourbon",
+    "alcohol_content": "45% ABV",
+    "net_contents": "750 mL",
+    "bottler_address": "Maker's Mark Distillery, Loretto, KY",
+    "country_origin": "United States",
+    "label_text": "MAKER'S MARK\nHandmade Kentucky Straight Bourbon Whisky\n45% ALC./VOL. (90 PROOF) | 750 mL\nDistilled & Bottled by Maker's Mark Distillery, Loretto, KY\nGovernment Warning: (1) According to the Surgeon General, women should not drink alcoholic beverages during pregnancy because of the risk of birth defects. (2) Consumption of alcoholic beverages impairs your ability to drive a car or operate machinery, and may cause health problems.",
+    "expected_status": "REJECTED_MISMATCH",
+    "expected_issues": [
+      "Case Violation: Title case 'Government Warning:'"
+    ]
+  },
+  {
+    "id": "EVAL-020",
+    "category": "Wine",
+    "brand_name": "CAYMUS SUISUN",
+    "class_type": "Petite Sirah",
+    "alcohol_content": "14.8% ABV",
+    "net_contents": "750 mL",
+    "bottler_address": "Caymus-Suisun, Fairfield, CA",
+    "country_origin": "United States",
+    "label_text": "CAYMUS-SUISUN\nGrand Durif - Suisun Valley\nALC. 14.8% BY VOL. | 750 mL\nProduced and Bottled by Caymus-Suisun Winery, Fairfield, California\ngovernment warning: (1) According to the Surgeon General, women should not drink alcoholic beverages during pregnancy because of the risk of birth defects. (2) Consumption of alcoholic beverages impairs your ability to drive a car or operate machinery, and may cause health problems.",
+    "expected_status": "REJECTED_MISMATCH",
+    "expected_issues": [
+      "Case Violation: All lowercase 'government warning:'"
+    ]
+  },
+  {
+    "id": "EVAL-021",
+    "category": "Distilled Spirits",
+    "brand_name": "PATRON",
+    "class_type": "Silver Tequila",
+    "alcohol_content": "40% ABV",
+    "net_contents": "750 mL",
+    "bottler_address": "The Patron Spirits Company, Las Vegas, NV",
+    "country_origin": "Mexico",
+    "label_text": "PATRON SILVER\n100% De Agave Tequila - Product of Mexico\n40% ALC./VOL. (80 PROOF) | 750 mL\nImported by The Patron Spirits Company, Las Vegas, NV",
+    "expected_status": "REJECTED_MISMATCH",
+    "expected_issues": [
+      "Missing Warning Statement"
+    ]
+  },
+  {
+    "id": "EVAL-022",
+    "category": "Wine",
+    "brand_name": "MEIOMI",
+    "class_type": "Pinot Noir",
+    "alcohol_content": "13.7% ABV",
+    "net_contents": "750 mL",
+    "bottler_address": "Meiomi Wines, Acampo, CA",
+    "country_origin": "United States",
+    "label_text": "MEIOMI\nCalifornia Pinot Noir\n13.7% ALC. BY VOL. | 750 mL\nVinted & Bottled by Meiomi Wines, Acampo, California\nGOVERNMENT WARNING: (2) Consumption of alcoholic beverages impairs your ability to drive a car or operate machinery, and may cause health problems.",
+    "expected_status": "REJECTED_MISMATCH",
+    "expected_issues": [
+      "Clause (1) Missing (Pregnancy Warning Omitted)"
+    ]
+  },
+  {
+    "id": "EVAL-023",
+    "category": "Malt Beverage / Beer",
+    "brand_name": "DOGFISH HEAD",
+    "class_type": "60 Minute IPA",
+    "alcohol_content": "6.0% ABV",
+    "net_contents": "12 FL. OZ.",
+    "bottler_address": "Dogfish Head Craft Brewery, Milton, DE",
+    "country_origin": "United States",
+    "label_text": "DOGFISH HEAD CRAFT BREWERY\n60 Minute IPA - Continually Hopped\n6.0% ALC./VOL. | 12 FL. OZ.\nBrewed & Bottled by Dogfish Head Craft Brewery, Milton, DE\nGOVERNMENT WARNING: (1) According to the Surgeon General, women should not drink alcoholic beverages during pregnancy because of the risk of birth defects.",
+    "expected_status": "REJECTED_MISMATCH",
+    "expected_issues": [
+      "Clause (2) Missing (Machinery Impairment Omitted)"
+    ]
+  },
+  {
+    "id": "EVAL-024",
+    "category": "Distilled Spirits",
+    "brand_name": "ELIJAH CRAIG",
+    "class_type": "Small Batch Bourbon",
+    "alcohol_content": "47% Alc./Vol. (94 Proof)",
+    "net_contents": "750 mL",
+    "bottler_address": "Elijah Craig Distillery, Bardstown, KY",
+    "country_origin": "United States",
+    "label_text": "EVAN WILLIAMS\nSingle Barrel Vintage Bourbon Whiskey\n47% ALC./VOL. (94 PROOF) | 750 mL\nBottled by Old Evan Williams Distillery, Bardstown, KY\nGOVERNMENT WARNING: (1) According to the Surgeon General, women should not drink alcoholic beverages during pregnancy because of the risk of birth defects. (2) Consumption of alcoholic beverages impairs your ability to drive a car or operate machinery, and may cause health problems.",
+    "expected_status": "REJECTED_MISMATCH",
+    "expected_issues": [
+      "Brand Name Mismatch: 'ELIJAH CRAIG' vs 'EVAN WILLIAMS'"
+    ]
+  },
+  {
+    "id": "EVAL-025",
+    "category": "Wine",
+    "brand_name": "JORDAN",
+    "class_type": "Alexander Valley Cabernet Sauvignon",
+    "alcohol_content": "13.8% ABV",
+    "net_contents": "750 mL",
+    "bottler_address": "Jordan Vineyard & Winery, Healdsburg, CA",
+    "country_origin": "United States",
+    "label_text": "JORDAN\nRussian River Valley Chardonnay 2022\n13.8% ALC./VOL. | 750 mL\nProduced and Bottled by Jordan Vineyard & Winery, Healdsburg, CA\nGOVERNMENT WARNING: (1) According to the Surgeon General, women should not drink alcoholic beverages during pregnancy because of the risk of birth defects. (2) Consumption of alcoholic beverages impairs your ability to drive a car or operate machinery, and may cause health problems.",
+    "expected_status": "REJECTED_MISMATCH",
+    "expected_issues": [
+      "Class/Type Mismatch: 'Cabernet Sauvignon' vs 'Chardonnay'"
+    ]
+  },
+  {
+    "id": "EVAL-026",
+    "category": "Distilled Spirits",
+    "brand_name": "BULLEIT",
+    "class_type": "Kentucky Straight Rye Whiskey",
+    "alcohol_content": "45% ABV",
+    "net_contents": "750 mL",
+    "bottler_address": "Bulleit Distilling Co., Shelbyville, KY",
+    "country_origin": "United States",
+    "label_text": "BULLEIT\nFrontier Whiskey - Kentucky Straight Rye Whiskey\n45% ALC. BY VOL. (90 PROOF) | 375 mL\nBottled by Bulleit Distilling Company, Shelbyville, KY\nGOVERNMENT WARNING: (1) According to the Surgeon General, women should not drink alcoholic beverages during pregnancy because of the risk of birth defects. (2) Consumption of alcoholic beverages impairs your ability to drive a car or operate machinery, and may cause health problems.",
+    "expected_status": "REJECTED_MISMATCH",
+    "expected_issues": [
+      "Net Contents Mismatch: '750 mL' on app vs '375 mL' on label"
+    ]
+  },
+  {
+    "id": "EVAL-027",
+    "category": "Distilled Spirits",
+    "brand_name": "OLD FITZGERALD",
+    "class_type": "Bottled in Bond Bourbon",
+    "alcohol_content": "50% Alc./Vol. (100 Proof)",
+    "net_contents": "750 mL",
+    "bottler_address": "Old Fitzgerald Distillery, Bardstown, KY",
+    "country_origin": "United States",
+    "label_text": "OLD FITZGERALD\nBottled-in-Bond Kentucky Straight Bourbon Whiskey\n50% ALC./VOL. (100 PROOF) | 750 mL\nBottled by Old Fitzgerald Distillery, Bardstown, KY\nGOVERNMENT WARNING: (1) According to the Surgeon General, women should not drink alcoholic beverages during pregnancy because of the risk of birth defects. (2) Consumption of alcoholic beverages impairs your bility odie a car oroperale machinery. and may cause health problems.",
+    "expected_status": "WARNING_REVIEW",
+    "expected_issues": [
+      "OCR Noise on Clause 2 words -> Routed to Agent Review"
+    ]
+  },
+  {
+    "id": "EVAL-028",
+    "category": "Wine",
+    "brand_name": "ROTH ESTATE",
+    "class_type": "Sauvignon Blanc",
+    "alcohol_content": "13.9% ABV",
+    "net_contents": "750 mL",
+    "bottler_address": "Roth Estate Winery, Healdsburg, CA",
+    "country_origin": "United States",
+    "label_text": "ROTH ESTATE\nAlexander Valley Sauvignon Blanc\nALCOHOL 13.9% BY VOLUME | 750 mL\nVinted & Bottled by Roth Winery, Healdsburg, CA\nGOVERNMENT WARNING: (1) According to the Surgeon General, women should not drink alcoholic beverages during pregnancy because of the risk of birth defects (2) Consumption of alcoholic beverages impairs your ability to drive a car or operate machinery, and may cause health problems",
+    "expected_status": "COMPLIANT",
+    "expected_issues": [
+      "Punctuation: Minor missing periods in warning -> Routed to Agent Review"
+    ]
+  },
+  {
+    "id": "EVAL-029",
+    "category": "Distilled Spirits",
+    "brand_name": "WILD TURKEY",
+    "class_type": "Kentucky Straight Bourbon",
+    "alcohol_content": "50.5% ABV",
+    "net_contents": "750 mL",
+    "bottler_address": "Wild Turkey Distilling Co., Lawrenceburg, KY",
+    "country_origin": "United States",
+    "label_text": "WILD TURKEY 101\nKentucky Straight Bourbon Whiskey\n50.5% ALC./VOL. (101 PROOF) | 750 mL\nAustin, Nichols Distilling Company, Lawrenceburg, Kentucky\nGOVERNMENT WARNING: (1) According to the Surgeon General, women should not drink alcoholic beverages during pregnancy because of the risk of birth defects. (2) Consumption of alcoholic beverages impairs your ability to drive a car or operate machinery, and may cause health problems.",
+    "expected_status": "COMPLIANT",
+    "expected_issues": []
+  },
+  {
+    "id": "EVAL-030",
+    "category": "Wine",
+    "brand_name": "CHATEAU MONTELENA",
+    "class_type": "Napa Valley Chardonnay",
+    "alcohol_content": "13.6% ABV",
+    "net_contents": "750 mL",
+    "bottler_address": "Chateau Montelena Winery, Calistoga, CA",
+    "country_origin": "United States",
+    "label_text": "CHATEAU MONTELENA\nNapa Valley Chardonnay 2021\n13.6% ALCOHOL BY VOLUME | 750 mL\nGrown, Produced & Bottled by Chateau Montelena Winery, Calistoga, California, USA\nGOVERNMENT WARNING: (1) According to the Surgeon General, women should not drink alcoholic beverages during pregnancy because of the risk of birth defects. (2) Consumption of alcoholic beverages impairs your ability to drive a car or operate machinery, and may cause health problems.",
+    "expected_status": "COMPLIANT",
+    "expected_issues": []
+  }
+]

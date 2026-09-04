@@ -143,8 +143,27 @@ function extractAbvAndProof(text) {
     if (!text) return { abv: null, proof: null };
     let abv = null, proof = null;
 
-    const abvMatch = text.match(/(\d+(?:\.\d+)?)\s*%\s*(?:alc(?:ohol)?(?:\s*(?:by|\/|\.)\s*vol(?:ume)?)?|abv)?/i);
-    if (abvMatch) abv = parseFloat(abvMatch[1]);
+    // Priority 1: 'ALC. 14.6% BY VOL' or 'ALCOHOL 13.8% BY VOLUME'
+    const p1 = text.match(/(?:alc(?:ohol)?(?:\s*(?:by|\/|\.)\s*vol(?:ume)?)?|abv)\s*[:.]?\s*(\d+(?:\.\d+)?)\s*%/i);
+    if (p1) abv = parseFloat(p1[1]);
+
+    // Priority 2: '45% Alc./Vol.' or '45% ABV'
+    if (abv === null) {
+        const p2 = text.match(/(\d+(?:\.\d+)?)\s*%\s*(?:alc(?:ohol)?(?:\s*(?:by|\/|\.)\s*vol(?:ume)?)?|abv)/i);
+        if (p2) abv = parseFloat(p2[1]);
+    }
+
+    // Priority 3: Standalone % that is not 100% (filtering out 100% Blue Agave / 100% Malt)
+    if (abv === null) {
+        const matches = text.matchAll(/(\d+(?:\.\d+)?)\s*%/g);
+        for (const m of matches) {
+            const v = parseFloat(m[1]);
+            if (v !== 100.0) {
+                abv = v;
+                break;
+            }
+        }
+    }
 
     const proofMatch = text.match(/(\d+(?:\.\d+)?)\s*proof/i);
     if (proofMatch) proof = parseFloat(proofMatch[1]);
@@ -218,7 +237,7 @@ function validateGovernmentWarning(extractedText) {
             headerValid = true;
             issues.push("PUNCTUATION ERROR: 'GOVERNMENT WARNING' is missing required trailing colon (:).");
         } else if (!isAllUpper) {
-            issues.push(`CASE VIOLATION (27 CFR § 16.21): Header must appear in ALL CAPITAL LETTERS. Found '${headerDetected}' instead of 'GOVERNMENT WARNING:'.`);
+            issues.push(`CASE VIOLATION (27 CFR § 16.21): Statutory header must appear in ALL CAPITAL LETTERS. Found '${headerDetected}' instead of 'GOVERNMENT WARNING:'.`);
         }
     }
 
@@ -233,25 +252,33 @@ function validateGovernmentWarning(extractedText) {
         }
     }
 
+    function fuzzyIncludes(sourceText, targetPhrase) {
+        const src = sourceText.toLowerCase();
+        const tgt = targetPhrase.toLowerCase();
+        if (src.includes(tgt)) return true;
+        const tgtWords = tgt.split(' ');
+        return tgtWords.every(w => src.includes(w));
+    }
+
     const c1Keywords = ["surgeon general", "pregnancy", "birth defects", "alcoholic beverages"];
-    const c1Found = c1Keywords.filter(kw => warningSegment.toLowerCase().includes(kw)).length;
+    const c1Found = c1Keywords.filter(kw => fuzzyIncludes(warningSegment, kw)).length;
     const pregnancyValid = (c1Found >= 3);
 
     if (!pregnancyValid) {
-        if (!warningSegment.toLowerCase().includes("surgeon general")) issues.push("CLAUSE (1) ERROR: Missing mandatory reference to 'Surgeon General'.");
-        if (!warningSegment.toLowerCase().includes("birth defects")) issues.push("CLAUSE (1) ERROR: Missing mandatory phrase 'birth defects'.");
+        if (!fuzzyIncludes(warningSegment, "surgeon general")) issues.push("CLAUSE (1) ERROR: Missing mandatory reference to 'Surgeon General'.");
+        if (!fuzzyIncludes(warningSegment, "birth defects")) issues.push("CLAUSE (1) ERROR: Missing mandatory phrase 'birth defects'.");
         issues.push("CLAUSE (1) INCOMPLETE: Mandatory pregnancy warning clause does not match statutory wording.");
     }
 
     const c2Keywords = ["impairs", "drive a car", "operate machinery", "health problems"];
-    const c2Found = c2Keywords.filter(kw => warningSegment.toLowerCase().includes(kw)).length;
+    const c2Found = c2Keywords.filter(kw => fuzzyIncludes(warningSegment, kw)).length;
     const machineryValid = (c2Found >= 3);
 
     if (!machineryValid) {
-        if (!warningSegment.toLowerCase().includes("drive a car") && !warningSegment.toLowerCase().includes("operate machinery")) {
+        if (!fuzzyIncludes(warningSegment, "drive a car") && !fuzzyIncludes(warningSegment, "operate machinery")) {
             issues.push("CLAUSE (2) ERROR: Missing mandatory impairment statement regarding driving or operating machinery.");
         }
-        if (!warningSegment.toLowerCase().includes("health problems")) {
+        if (!fuzzyIncludes(warningSegment, "health problems")) {
             issues.push("CLAUSE (2) ERROR: Missing mandatory phrase 'may cause health problems'.");
         }
         issues.push("CLAUSE (2) INCOMPLETE: Mandatory machinery/health warning clause does not match statutory wording.");

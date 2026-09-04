@@ -34,17 +34,19 @@ def verify_net_contents(app_val: str, extracted_text: str) -> tuple[float, str, 
 def run_compliance_audit(
     app: COLAApplication,
     extracted_text: str,
-    bounding_boxes: List[BoundingBox]
+    bounding_boxes: Optional[List[BoundingBox]] = None
 ) -> VerificationReport:
     """
     Executes full 27 CFR Label Compliance Audit on extracted label text against COLA Application.
     """
     start_time = time.perf_counter()
+    if bounding_boxes is None:
+        bounding_boxes = []
     field_results: List[FieldVerificationResult] = []
     summary_notes: List[str] = []
     
     # 1. Brand Name Check
-    brand_conf, extracted_brand, brand_expl = match_field_text(app.brand_name, extracted_text, threshold=0.85)
+    brand_conf, extracted_brand, brand_expl = match_field_text(app.brand_name, extracted_text, threshold=0.75)
     brand_status = ComplianceStatus.COMPLIANT if brand_conf >= 0.85 else (
         ComplianceStatus.WARNING_REVIEW if brand_conf >= 0.65 else ComplianceStatus.REJECTED_MISMATCH
     )
@@ -134,7 +136,7 @@ def run_compliance_audit(
 
     # 6. Country of Origin Check (if imported)
     if app.country_of_origin and app.country_of_origin.lower() not in ["united states", "usa", "us"]:
-        origin_conf, extracted_origin, origin_expl = match_field_text(app.country_of_origin, extracted_text, threshold=0.85)
+        origin_conf, extracted_origin, origin_expl = match_field_text(app.country_of_origin, extracted_text, threshold=0.75)
         origin_status = ComplianceStatus.COMPLIANT if origin_conf >= 0.85 else ComplianceStatus.REJECTED_MISMATCH
         field_results.append(FieldVerificationResult(
             field_name="country_of_origin",
